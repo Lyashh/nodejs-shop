@@ -1,0 +1,22 @@
+{
+    "name": "default",
+    "type": "postgres",
+    "url": "postgres://postgres:813621az@localhost:5432/typeorm",
+    "synchronize": false,
+    "dropSchema": false,
+    "logging": true,
+    "entities": [
+        "src/entity/**/*.ts"
+    ],
+    "migrations": [
+         "src/database/migrations/**/*.ts"
+    ],
+    "subscribers": [
+        "src/subscriber/**/*.ts"
+    ],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/database/migrations",
+        "subscribersDir": "src/subscriber"
+    }
+  } 
