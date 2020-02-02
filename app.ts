@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import router from './routes/'
 
 class App {
     private  static _app: App
@@ -12,10 +13,11 @@ class App {
 
     private config() {
         //this._expressApp.use(cors())
-        this._expressApp.set('port', process.env.PORT || 3000);
+        this._expressApp.set('port', process.env.PORT || 3000)
+        this._expressApp.use('/', router.routes)
         this._expressApp.use((req, res, next) => {
             res.status(404);
-            return res.json({ error: 'Not found' });
+            return res.json({ error: 'Not found' })
         });
     }
 
