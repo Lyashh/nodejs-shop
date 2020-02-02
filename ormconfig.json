@@ -6,17 +6,17 @@
     "dropSchema": false,
     "logging": true,
     "entities": [
-        "src/entity/**/*.ts"
+        "build/database/entity/**/*.js"
     ],
     "migrations": [
-         "src/database/migrations/**/*.ts"
+         "build/database/migrations/**/*.js"
     ],
     "subscribers": [
-        "src/subscriber/**/*.ts"
+        "build/database/subscriber/**/*.js"
     ],
     "cli": {
-        "entitiesDir": "src/entity",
-        "migrationsDir": "src/database/migrations",
-        "subscribersDir": "src/subscriber"
+        "entitiesDir": "/src/database/entity",
+        "migrationsDir": "/src/database/migrations",
+        "subscribersDir": "/src/database/subscriber"
     }
   } 
