@@ -3,14 +3,10 @@ import {createConnection, Connection} from "typeorm";
 export default class TypeConnection {
     private  static _app: TypeConnection
 
-    async getConnection() {
-        try {
-            const connection: Connection = await createConnection();
-            console.log('Success Connection to DB');
-            return connection
-        } catch(error) {
-            console.log({error})
-        }
+    getConnection(): Promise<void | Connection>{
+        return createConnection()
+            .then(connection => connection)
+            .catch(err => err)
     }
 
     public static get getInstance(): TypeConnection {

@@ -17,7 +17,6 @@ class App {
     }
 
     private config() {
-        this._db.getConnection()
         this._expressApp.use(cors())
         this._expressApp.set('port', process.env.PORT || 3000)
         this._expressApp.use('/', router.routes)
