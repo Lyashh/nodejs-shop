@@ -3,9 +3,9 @@ import RootRouter from './root.router'
 import UserRouter from './users.router'
 
 export default class Router {
-    private _router: ExpressRouter
-    private _userRouter: UserRouter
-    private _rootRouter: RootRouter
+    public _router: ExpressRouter
+    public _userRouter: UserRouter
+    public _rootRouter: RootRouter
     constructor() {
         this._router = ExpressRouter();
         this._userRouter = new UserRouter()

@@ -1,18 +1,12 @@
 import { Response, Request } from 'express'
+import {UserInterface} from '../services/db/user.service'
 import UserService from '../services/db/user.service'
-import { UserInterface } from '../database/entity/user'
 
 export default class UserControoller {
-    private _userService: UserService
-    constructor() {
-        this._userService = new UserService()
-    }
-    public createOne(req: Request, res: Response) : Response {
-        /*const newUser: UserInterface = {
-            name: req.body.name,
-            age: req.body.age,
-            email: req.body.email
-        }*/
-        return res.json('Create one user')
+    public createOne(req: Request, res: Response) {
+        const newUser: UserInterface = req.body.user        
+        return UserService.createOne(newUser)
+            .then(user => res.json({user}))
+            .catch(err => res.json({err}))
     }
 }

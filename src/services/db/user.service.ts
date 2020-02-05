@@ -1,25 +1,30 @@
-import { User, UserInterface } from '../../database/entity/user'
+import { User } from '../../database/entity/user'
 import DB from '../../database/connection/'
-import {Connection, Any} from "typeorm";
+import {Connection} from "typeorm";
+
+export interface UserInterface{
+    name: string
+    age: number
+    email: string
+}
 
 export default class userService {
-    private _db: DB
-    private _connection: Connection | any
-    constructor() {
-        this._db = DB.getInstance
-        this._db.getConnection()
-            .then(connection => this._connection = connection)
-            .catch(err => console.log(err))
-    }
-
-    createOne(newUser: UserInterface) {
+    public static  _db: DB = DB.getInstance
+    public static async createOne(newUser: UserInterface): Promise<any> {
+        console.log('CreateOne function');
         let user = new User()
         user.age = newUser.age
         user.email = newUser.email
         user.name = newUser.name
 
-        return this._connection.manager
-        .save(user)
-        .then(user => console.log("User has been saved. User id is", user.id))
+        userService._db.getConnection().then(connection => {
+            console.log(connection);
+            
+        })
+            /*console.log('Connection');
+            return connection.manager
+                .save(user)
+                .then(user => user)*/
     }
 }
+

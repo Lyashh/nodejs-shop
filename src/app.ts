@@ -1,4 +1,5 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import cors from 'cors'
 import Router from './routes/index.router'
 import DB from './database/connection/'
@@ -19,6 +20,8 @@ class App {
     }
 
     private config() {
+        this._expressApp.use(bodyParser.urlencoded({ extended: false }))
+        this._expressApp.use(bodyParser.json())
         this._expressApp.use(cors())
         this._expressApp.set('port', process.env.PORT || 3000)
         this._expressApp.use('/', this._router.routes)

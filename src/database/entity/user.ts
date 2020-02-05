@@ -15,9 +15,3 @@ export class User {
     @Column({nullable: true})
     email: string
 }
-
-export interface UserInterface{
-    name: string
-    age: number
-    email: string
-}

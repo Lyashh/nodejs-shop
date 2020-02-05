@@ -2,8 +2,8 @@ import { Router as ExpressRouter } from 'express'
 import UserController from '../controllers/user.controller'
 
 export default class UsersRouter {
-    private _router: ExpressRouter
-    private _userController: UserController
+    public _router: ExpressRouter
+    public _userController: UserController
     constructor()  {
         this._userController = new UserController()
         this._router = ExpressRouter()
