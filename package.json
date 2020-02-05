@@ -6,6 +6,7 @@
   "scripts": {
     "ts": "./node_modules/typescript/bin/tsc -w",
     "start": "node build/app.js",
+    "dev-server": "node ./node_modules/nodemon/bin/nodemon build/app.js",
     "migrate:create": "npx ts-node ./node_modules/.bin/typeorm migration:generate -n Migration",
     "migrate:run": "npx ts-node ./node_modules/.bin/typeorm migration:run"
   },
@@ -23,6 +24,7 @@
     "typeorm": "^0.2.22"
   },
   "devDependencies": {
+    "nodemon": "^2.0.2",
     "typescript": "^3.7.4"
   }
 }

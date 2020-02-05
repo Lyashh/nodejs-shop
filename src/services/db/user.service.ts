@@ -20,8 +20,6 @@ export default class userService {
 
         return this._connection.manager
         .save(user)
-        .then(user => {
-            console.log("User has been saved. User id is", user.id);
-        });
+        .then(user => console.log("User has been saved. User id is", user.id))
     }
 }
