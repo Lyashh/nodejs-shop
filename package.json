@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "ts": "./node_modules/typescript/bin/tsc -w",
-    "start": "node build/app.js",
-    "dev-server": "env ORM_FORMAT='js' node ./node_modules/nodemon/bin/nodemon build/app.js",
-    "migrate:create": "env ORM_FORMAT='ts' npx ts-node ./node_modules/.bin/typeorm migration:generate -n Migration",
-    "migrate:run": "env ORM_FORMAT='ts' npx ts-node ./node_modules/.bin/typeorm migration:run"
+    "start": "node dist/app.js",
+    "dev-server": "node ./node_modules/nodemon/bin/nodemon dist/app.js",
+    "init-knexfile": "node_modules/knex/bin/cli.js init ",
+    "migrate:create": "npx ts-node node_modules/knex/bin/cli.js migrate:make $NAME --cwd src/database",
+    "migrate:latest": "npx ts-node node_modules/knex/bin/cli.js migrate:latest --cwd"
   },
   "author": "",
   "license": "ISC",
@@ -16,14 +17,18 @@
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
+    "@types/express-session": "^1.15.16",
+    "@types/passport": "^1.0.2",
     "@types/passport-google-oauth20": "^2.0.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "knex": "^0.20.8",
+    "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^7.17.1",
-    "typeorm": "^0.2.22"
+    "pg": "^7.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2",

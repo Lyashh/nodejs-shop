@@ -1,15 +1,18 @@
-import {createConnection, Connection} from "typeorm";
+import Knex from 'knex'
+import Config from '../knexfile'
 
-export default class TypeConnection {
-    private  static _app: TypeConnection
-
-    getConnection(): Promise<void | Connection>{
-        return createConnection()
-            .then(connection => connection)
-            .catch(err => err)
+export default class Connection {
+    private  static _instance: Connection
+    public _connection: Knex
+    private constructor() {
+        this._connection = Knex(Config as Knex.Config)
     }
 
-    public static get getInstance(): TypeConnection {
-        return this._app || (this._app = new this())
+    public get getConnection() {
+        return this._connection
+    }
+
+    public static get getInstance(): Connection {
+        return this._instance || (this._instance = new this())
     }
 }
