@@ -2,20 +2,9 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import Router from './routes/index.router'
-import passport  from 'passport'
 import session from 'express-session'
-import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
-
-
-const verifyHandler = (accessToken, refreshToken, profile, cb, done) => {
-    const data = {
-      id: cb.id,
-      name: cb.displayName,
-    }
-    return done(null, data)
-  };
-
-
+import auth from './services/auth/passport'
+const passport = auth.getInstance
 
 import doenv from 'dotenv'  //add env
 doenv.config()
@@ -43,36 +32,7 @@ class App {
         this._expressApp.use(bodyParser.urlencoded({ extended: false }))
         this._expressApp.use(bodyParser.json())
         this._expressApp.use(cors())
-
-        this._expressApp.use(passport.initialize()); // Used to initialize passport
-        this._expressApp.use(passport.session()); // Used to persist login sessions
-
-        passport.use(new GoogleStrategy({
-            clientID: process.env.CLIENT_ID as string,
-            clientSecret: process.env.CLIENT_SECRET as string,
-            callbackURL: '/auth/google/callback',
-            passReqToCallback: true
-          }, verifyHandler)); 
-
-          // Used to stuff a piece of information into a cookie
-            passport.serializeUser((user, done) => {
-                done(null, user);
-            });
-
-            // Used to decode the received cookie and persist session
-            passport.deserializeUser((user, done) => {
-                done(null, user);
-            });
-
-            this._expressApp.get('/auth/google', passport.authenticate('google', {
-                scope: ['profile'] // Used to specify the required data
-            }));   
-            
-            this._expressApp.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-                console.log('callback');
-                res.json('/secret');
-            });
-
+        this._expressApp.use(passport.passportMiddl)
         this._expressApp.set('port', process.env.PORT || 3000)
         this._expressApp.use('/', this._router.routes)
         this._expressApp.use((req, res, next) => {
