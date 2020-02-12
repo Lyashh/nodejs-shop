@@ -13,6 +13,7 @@ export default class UsersRouter {
     public get routes() {
         this._router.get('/google', passport.googleAuth)
         this._router.get('/google/callback', passport.googleMiddleware, this._authController.googleCallback)
+        this._router.post('/registration', this._authController.userValidation, this._authController.registration)
         return this._router
     }
 }

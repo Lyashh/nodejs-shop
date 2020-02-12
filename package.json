@@ -9,11 +9,14 @@
     "dev-server": "node ./node_modules/nodemon/bin/nodemon dist/app.js",
     "init-knexfile": "node_modules/knex/bin/cli.js init ",
     "migrate:create": "npx ts-node node_modules/knex/bin/cli.js migrate:make $NAME --cwd src/database",
-    "migrate:latest": "npx ts-node node_modules/knex/bin/cli.js migrate:latest --cwd"
+    "migrate:latest": "npx ts-node node_modules/knex/bin/cli.js migrate:latest --cwd src/database",
+    "migrate:rollback": "npx ts-node node_modules/knex/bin/cli.js migrate:rollback --cwd src/database",
+    "migrate:down": "npx ts-node node_modules/knex/bin/cli.js migrate:down --cwd src/database"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
