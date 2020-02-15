@@ -1,15 +1,14 @@
 import { Response, Request, NextFunction } from 'express'
 import Validation from '../services/validation/joi'
 import UserService from '../services/db/user.service'
-import auth from '../services/auth/passport'
-const passport = auth.getInstance
-
 
 export default class AuthControoller {
     public googleCallback(req: Request, res: Response) : Response {
-        console.log(req.session);
-        console.log('callback');
-        return res.json('/secret');
+        if(req.isAuthenticated()) {
+            return res.json({message: "success", detail: req.session!.passport.user})
+        } else {
+            return res.json({message: "error", detail: "cant auth"})
+        }
     }
 
     public registration(req: Request, res: Response) {
@@ -20,6 +19,14 @@ export default class AuthControoller {
                 return res.json({result})
             }  
         }).catch(err => res.json({err}))
+    }
+
+    public logout(req: Request, res: Response) {
+        if(req.isAuthenticated()) {
+            return res.json({message: "success", detail: "success logout"})
+        } else {
+            return res.json({message: "error", detail: "You must login"})
+        }
     }
 
     public async userValidation(req: Request, res: Response, next: NextFunction) {
@@ -33,7 +40,14 @@ export default class AuthControoller {
             }
         } else {
             return res.json({error: 'Request dont have field "user"'})
+        }  
+    }
+
+    public isAuthMiddleware(req: Request, res: Response, next: NextFunction) {
+        if(req.isAuthenticated()) {
+            next()
+        } else {
+            return res.json({message: "error", detail: "You must login"})
         }
-        
     }
 }

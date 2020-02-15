@@ -3,11 +3,14 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import Router from './routes/index.router'
 import session from 'express-session'
+
 import auth from './services/auth/passport'
 const passport = auth.getInstance
 
+
 import doenv from 'dotenv'  //add env
 doenv.config()
+
 
 class App {
     private  static _app: App
@@ -24,15 +27,17 @@ class App {
             secret: 'cookie_secret',
             name: 'cookie_name',
             //store: sessionStore, 
-            proxy: true,
-            resave: true,
+            resave: false,
             saveUninitialized: true
            })
          );
         this._expressApp.use(bodyParser.urlencoded({ extended: false }))
         this._expressApp.use(bodyParser.json())
         this._expressApp.use(cors())
-        this._expressApp.use(passport.passportMiddl)
+        
+        this._expressApp.use(passport._passport.initialize())
+        this._expressApp.use(passport._passport.session())
+
         this._expressApp.set('port', process.env.PORT || 3000)
         this._expressApp.use('/', this._router.routes)
         this._expressApp.use((req, res, next) => {
