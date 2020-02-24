@@ -1,11 +1,12 @@
 import DB from '../../database/connection'
 
 export default class userService {
-    public static async createOne(newUser): Promise<any> {
-        const knex = await DB.getInstance.getConnection
-          return knex('users').where('login', newUser.login).orWhere('email', newUser.email).then(res => {
+    public static knex = DB.getInstance.getConnection
+
+    public static createorFindOne(newUser): Promise<any> {
+          return userService.knex('users').where('email', newUser.email).then(res => {
             if (res.length === 0) {
-                return knex('users').insert(newUser).returning(['id', 'email']).then(res => {
+                return userService.knex('users').insert(newUser).returning(['id', 'email']).then(res => {
                     return {
                         message: 'New User', 
                         user: res
@@ -21,6 +22,10 @@ export default class userService {
                 }
             }
           }).catch(err => err)
+    }
+
+    public static findByEmail(email): Promise<any> {
+        return userService.knex('users').where('email', email).first('*').then(user => user).catch(err => err)
     }
 }
 

@@ -42,7 +42,7 @@ class App {
         this._expressApp.use('/', this._router.routes)
         this._expressApp.use((req, res, next) => {
             res.status(404);
-            return res.json({ error: 'Not found' })
+            return res.json({ error: 'Not found '  + req.originalUrl})
         });
     }
 

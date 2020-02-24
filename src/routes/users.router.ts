@@ -9,7 +9,6 @@ export default class UsersRouter {
         this._router = ExpressRouter()
     }
     public get routes() {
-        this._router.post('/', this._userController.createOne)
         return this._router
     }
 }
