@@ -50,7 +50,7 @@ export default class Auth {
             registration: 0
         } 
         return userService.createorFindOne(user).then((result) => {
-            if(result.name=="error") {
+            if(result.name=="error") {                
                 return done({message: 'error', detail: result.ditail, code: result.code}, null)
             } else {
                 return done(null, result)
@@ -63,7 +63,7 @@ export default class Auth {
             if(user) {
                 const match = await bcrypt.compare(password, user.password)
                 if(match) {
-                    return done(null, email);
+                    return done(null, {id: user.id, email: user.email, name: user.name});
                 } else {
                     return done(null, false, { message:  'Wrong password' })
                 }

@@ -26,23 +26,23 @@ export default class AuthControoller {
     }
 
     public login(req: Request, res: Response) {
-        res.json({message: 'success', detail: 'login'});
+        res.json({message: 'success', detail: req.session!.passport.user});
     }
 
     public localCallback(req: Request, res: Response) {
-        res.json({message: 'error', detail: 'login'});
+        res.json({message: 'error', detail: req.session!.messages});
     }
 
     public logout(req: Request, res: Response) {
-        if(req.isAuthenticated()) {
-            return res.json({message: "success", detail: "success logout"})
-        } else {
-            return  res.status(401).json({message: "Unauthorized", 
-                        detail: "The request has not been applied because it lacks valid authentication credentials for the target resource"})
-        }
+        req.logout();
+        return res.json({message: "success", detail: "success logout"})
     }
 
     public failLogin(req: Request, res: Response) {
         return res.json({message: "error", detail: req.session!.messages})
+    }
+
+    public profile(req: Request, res: Response) {
+        return res.json({message: "success", detail: "login", user: req.session!.passport.user})
     }
 }
