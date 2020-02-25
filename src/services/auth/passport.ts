@@ -47,7 +47,7 @@ export default class Auth {
             google_id: cb.id,
             name: cb.displayName,
             email: cb._json.email, 
-            registration: 0
+            registration_id: 2
         } 
         return userService.createorFindOne(user).then((result) => {
             if(result.name=="error") {                

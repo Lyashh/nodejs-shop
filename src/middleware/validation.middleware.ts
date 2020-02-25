@@ -8,7 +8,6 @@ export default  class ValidationMiddleware {
             if(validResylt.error) {
                 return res.json({error: validResylt.error.details[0]})
             } else {
-                req.body.user.registration = 1
                 next()
             }
         } else {

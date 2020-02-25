@@ -13,6 +13,7 @@ export default class AuthControoller {
     }
 
     public registration(req: Request, res: Response) {
+        req.body.user.registration_id = 1
         return bcrypt.hash(req.body.user.password, 10).then(hash => {
             req.body.user.password = hash
             return UserService.createorFindOne(req.body.user).then((result) => {
