@@ -6,7 +6,7 @@ export default class userService {
     public static createorFindOne(newUser): Promise<any> {
           return userService.knex('users').where('email', newUser.email).then(res => {
             if (res.length === 0) {
-                return userService.knex('users').insert(newUser).returning(['id', 'email']).then(res => {
+                return userService.knex('users').insert(newUser).returning(['id', 'email', 'role_id', 'name']).then(res => {
                     return {
                         message: 'New User', 
                         user: res
@@ -17,7 +17,8 @@ export default class userService {
                     message: 'User already exists',
                     user: {
                         id: res[0].id,
-                        email: res[0].email
+                        email: res[0].email,
+                        name: res[0].name
                     }
                 }
             }
