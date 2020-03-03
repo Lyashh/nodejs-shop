@@ -6,25 +6,28 @@ export default  class ValidationMiddleware {
         if(req.body.user) {
             const validResylt = await Validation.userValidation(req.body.user)
             if(validResylt.error) {
-                return res.json({error: validResylt.error.details[0]})
+                return res.status(422).json({   error: validResylt.error.details[0], 
+                                                message: 'validation fails'})
             } else {
                 next()
             }
         } else {
-            return res.json({error: 'Request dont have field "user"'})
+            return res.status(422).json({error: 'Request dont have field "user"', message: 'validation fails'})
         }  
     }
 
     public async loginValidation(req: Request, res: Response, next: NextFunction) {
         if(req.body.password && req.body.email) {
-            const validResylt = await Validation.loginValidation({email: req.body.email, password: req.body.password})
+            const validResylt = await Validation.loginValidation({  email: req.body.email, 
+                                                                    password: req.body.password})
             if(validResylt.error) {
-                return res.json({error: validResylt.error.details[0]})
+                return res.status(422).json({error: validResylt.error.details[0]})
             } else {
                 next()
             }
         } else {
-            return res.json({error: 'Request dont have any of this fields "password", "email"'})
+            return res.status(422).json({   error: 'Request dont have any of this fields "password", "email"', 
+                                            message: 'validation fails'})
         }  
     }
 }

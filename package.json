@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/app[.js",
-
   "modulesUrls": {
     "nodemon": "./node_modules/nodemon/bin/nodemon",
     "knex": "./node_modules/knex/bin/cli.js"
   },
-
   "knexfile": "--cwd src/database",
-
   "scripts": {
     "ts": "./node_modules/typescript/bin/tsc -w",
     "start": "node dist/app.js",
@@ -19,7 +16,7 @@
     "migrate:create": "npx ts-node $npm_package_modulesUrls_knex migrate:make $NAME $npm_package_knexfile",
     "migrate:latest": "npx ts-node $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
     "migrate:rollback": "npx ts-node $npm_package_modulesUrls_knex migrate:rollback $npm_package_knexfile",
-    "migrate:down": "npx ts-node $npm_package_modulesUrls_knex migrate:down --to 0 $npm_package_knexfile",
+    "migrate:down": "npx ts-node $npm_package_modulesUrls_knex migrate:down $npm_package_knexfile",
     "migrate:up": "npx ts-node $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
     "seed:create": "npx ts-node $npm_package_modulesUrls_knex seed:make $NAME $npm_package_knexfile",
     "seed:run": "npx ts-node $npm_package_modulesUrls_knex seed:run $npm_package_knexfile"
@@ -44,6 +41,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "knex": "^0.20.8",
+    "log4js": "^6.1.2",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",

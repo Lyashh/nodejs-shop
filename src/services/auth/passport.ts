@@ -63,7 +63,7 @@ export default class Auth {
             if(user) {
                 const match = await bcrypt.compare(password, user.password)
                 if(match) {
-                    return done(null, {id: user.id, email: user.email, name: user.name, role: user.role_id});
+                    return done(null, {id: user.id, email: user.email, name: user.name, role_id: user.role_id});
                 } else {
                     return done(null, false, { message:  'Wrong password' })
                 }

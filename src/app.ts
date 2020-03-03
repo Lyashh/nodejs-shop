@@ -1,16 +1,21 @@
+import log4js  from 'log4js'
+const logger = log4js.getLogger();
+
+
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import Router from './routes/index.router'
 import session from 'express-session'
 
+import DB from './database/connection/'
+const knex = DB.getInstance.getConnection
+
 import auth from './services/auth/passport'
 const passport = auth.getInstance
 
-
 import doenv from 'dotenv'  //add env
 doenv.config()
-
 
 class App {
     private  static _app: App
@@ -20,9 +25,18 @@ class App {
         this._expressApp = express()
         this._router = new Router()
         this.config()
+
+        knex.raw('SET timezone="UTC";').then(result => logger.info('Success connection to Database')).catch(err => {
+            logger.error({
+                message: 'Database failed to connect',
+                error: err
+            })
+            throw new Error('Database failed to connect');
+        })
     }
 
     private config() {
+        
         this._expressApp.use(session({
             secret: 'cookie_secret',
             name: 'cookie_name',
@@ -48,7 +62,7 @@ class App {
 
     public init() {
         this._expressApp.listen(this._expressApp.get('port'), () => {
-            console.log(`SERVER RUN ON PORT ${ this._expressApp.get('port') }`);
+            logger.info(`SERVER RUN ON PORT ${ this._expressApp.get('port') }`)
         })
     }
 

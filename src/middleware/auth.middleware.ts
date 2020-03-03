@@ -14,7 +14,8 @@ export default class AuthMiddleware {
         if(!req.isAuthenticated()) {
             next()
         } else {
-            return res.status(401).json({message: "Forbidden", 
+            return res.status(401).json({
+                message: "Forbidden", 
                 detail: "You cant access to this request because you Authorized now. please try logout"})
         }
     }
