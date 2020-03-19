@@ -14,14 +14,17 @@ export default class UserControoller {
 
     public pagination(req: Request, res: Response) {
         return UserService.paginate(Number(req.params.page), Number(req.params.limit))
-            .then(async (data: { users?: Object; maxPage?: Object; }) => {
+            .then(async (data: { users?: Object; maxPage: Object; }) => {
                if(data.users) {
-                   return res.json({data: data.users})
+                    return res.json({data: {
+                        users: data.users,
+                        maxPage: data.maxPage
+                    }
+                })
                } else {
                     res.status(404).json({message: `Page ${req.params.page} does not exist`, maxPage: data.maxPage})
                }
-            })
-            .catch(err => res.json(err))
+            }).catch(err => res.json(err))
     }
 
     public getById(req: Request, res: Response) {

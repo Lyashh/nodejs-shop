@@ -57,26 +57,31 @@ export default class userService {
         return userService.knex('users').where('id', id).del().then(user => user).catch(err => err)
     }
 
-    public static paginate(page: number, limit: number) {
+    public static async paginate(page: number, limit: number) {
         let offset
         page == 1 ? offset = 0 : offset = (page - 1) * limit
+
+        const info = await userService.countRows()
+        const maxPage = await userService.getMaxPage(info, Number(limit))
+        
+
         return userService.knex
             .select('u.name', 'u.id', 'u.email')
             .from('users AS u')
             .limit(limit).offset(offset)
             .then( async (users: Array<Object>) => {
                 if(users.length) {
-                    return {users}
+                    return {users, maxPage}
                 } else {
-                     const info = await userService.countRows()
-                     
-                     let maxPage = Math.trunc(info.rows[0].count / Number(limit))
-                     maxPage == 0 ? ++maxPage : 
-                         Number.isInteger(Number(maxPage)) ? null : ++maxPage
-                
                     return {maxPage}
                 } 
             }).catch(err => err)
+    }
+
+    public static async getMaxPage(infoRows, limit: Number) {
+        let maxPage = Math.trunc(infoRows.rows[0].count / Number(limit))
+        return maxPage == 0 ? ++maxPage : 
+            Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage
     }
 
     public static countRows() {

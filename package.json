@@ -5,11 +5,14 @@
   "main": "dist/app[.js",
   "modulesUrls": {
     "nodemon": "./node_modules/nodemon/bin/nodemon",
-    "knex": "./node_modules/knex/bin/cli.js"
+    "knex": "./node_modules/knex/bin/cli.js",
+    "typescript": "./node_modules/typescript/bin/tsc",
+    "eslint": "./node_modules/eslint/bineslint.js"
   },
   "knexfile": "--cwd src/database",
   "scripts": {
-    "ts": "./node_modules/typescript/bin/tsc -w",
+    "typescript": "./node_modules/typescript/bin/tsc",
+    "ts": "npm run typescript -- -w",
     "start": "node dist/app.js",
     "dev-server": "node $npm_package_modulesUrls_nodemon dist/app.js",
     "init-knexfile": "$npm_package_modulesUrls_knex init ",
@@ -19,7 +22,10 @@
     "migrate:down": "npx ts-node $npm_package_modulesUrls_knex migrate:down $npm_package_knexfile",
     "migrate:up": "npx ts-node $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
     "seed:create": "npx ts-node $npm_package_modulesUrls_knex seed:make $NAME $npm_package_knexfile",
-    "seed:run": "npx ts-node $npm_package_modulesUrls_knex seed:run $npm_package_knexfile"
+    "seed:run": "npx ts-node $npm_package_modulesUrls_knex seed:run $npm_package_knexfile",
+    "eslint": "./node_modules/eslint/bin/eslint.js",
+    "eslint:init": "npm run eslint -- --init",
+    "eslint:run": "npm run eslint -- ./src/**/*.ts"
   },
   "author": "",
   "license": "ISC",
@@ -33,7 +39,6 @@
     "@types/passport": "^1.0.2",
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-local": "^1.0.33",
-    "@types/restify": "^8.4.2",
     "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -48,6 +53,12 @@
     "pg": "^7.17.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
     "nodemon": "^2.0.2",
     "typescript": "^3.7.4"
   }
