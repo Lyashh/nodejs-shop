@@ -7,7 +7,7 @@
     "nodemon": "./node_modules/nodemon/bin/nodemon",
     "knex": "./node_modules/knex/bin/cli.js",
     "typescript": "./node_modules/typescript/bin/tsc",
-    "eslint": "./node_modules/eslint/bineslint.js"
+    "eslint": "./node_modules/eslint/bin/eslint.js"
   },
   "knexfile": "--cwd src/database",
   "scripts": {
@@ -23,9 +23,10 @@
     "migrate:up": "npx ts-node $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
     "seed:create": "npx ts-node $npm_package_modulesUrls_knex seed:make $NAME $npm_package_knexfile",
     "seed:run": "npx ts-node $npm_package_modulesUrls_knex seed:run $npm_package_knexfile",
-    "eslint": "./node_modules/eslint/bin/eslint.js",
-    "eslint:init": "npm run eslint -- --init",
-    "eslint:run": "npm run eslint -- ./src/**/*.ts"
+    "eslint": "./node_modules/eslint/bin/eslint.js; exit 0",
+    "eslint:init": "$npm_package_modulesUrls_eslint -- --init",
+    "eslint:run": "$npm_package_modulesUrls_eslint ./src/**/*.ts; exit 0",
+    "eslint:fix": "$npm_package_modulesUrls_eslint ./src/**/*.ts; exit 0"
   },
   "author": "",
   "license": "ISC",
@@ -54,12 +55,14 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "nodemon": "^2.0.2",
+    "tslint": "^6.1.0",
     "typescript": "^3.7.4"
   }
 }
