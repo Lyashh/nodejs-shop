@@ -72,3 +72,5 @@ class App {
 
 const server = App.getInstance;
 server.init();
+
+export default App;

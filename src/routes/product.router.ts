@@ -1,19 +1,17 @@
 import { Router as ExpressRouter } from 'express';
 import ItemController from '../controllers/product.controller';
 
-
 export default class RootRouter {
-    public _router: ExpressRouter
+	private router: ExpressRouter
+	private productController: ItemController
 
-    public _productController: ItemController
+	constructor() {
+		this.productController = new ItemController();
+		this.router = ExpressRouter();
+	}
 
-    constructor() {
-      this._productController = new ItemController();
-      this._router = ExpressRouter();
-    }
-
-    public get routes() {
-      // this._router.get('/', this._rootController.index)
-      return this._router;
-    }
+	public get routes(): ExpressRouter {
+		// this.router.get('/', this.rootController.index)
+		return this.router;
+	}
 }

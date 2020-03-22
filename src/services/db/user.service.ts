@@ -1,5 +1,6 @@
 import log4js from 'log4js';
 import DB from '../../database/connection';
+import {seed} from '../../database/seeds/users'
 
 const logger = log4js.getLogger();
 logger.level = 'debug';
@@ -8,14 +9,12 @@ export default class UserService {
 	public static knex = DB.getInstance.getConnection
 
 	public static createorFindOne(newUser): Promise<any> {
-		return UserService.knex('users').where('email', newUser.email).then(res => {
+		return UserService.knex('users').where('email', newUser.email).then((res) => {
 			if (res.length === 0) {
-				return UserService.knex('users').insert(newUser).returning(['id', 'email', 'role_id', 'name']).then(res => {
-					return {
-						message: 'New User',
-						user: res
-					}
-				})
+				return UserService.knex('users').insert(newUser).returning(['id', 'email', 'role_id', 'name']).then((res) => ({
+					message: 'New User',
+					user: res,
+				}))
 					.catch((err) => err);
 			}
 			return {
@@ -39,7 +38,7 @@ export default class UserService {
 	}
 
 	public static findAll(): Promise<any> {
-		return UserService.knex('users').select(['id, name, email']).then((user) => user).catch((err) => err);
+		return UserService.knex('users').select(['id', 'name', 'email']).then((user) => user).catch((err) => err);
 	}
 
 	public static findById(id: number): Promise<any> {
@@ -71,7 +70,7 @@ export default class UserService {
 			.select('u.name', 'u.id', 'u.email')
 			.from('users AS u')
 			.limit(limit).offset(offset)
-			.then((users: Array<Object>) => {
+			.then((users: Array<Record<string, any>>) => {
 				if (users.length) {
 					return { users, maxPage };
 				}
@@ -82,11 +81,19 @@ export default class UserService {
 
 	public static getMaxPage(infoRows, limit: number): number {
 		let maxPage = Math.trunc(infoRows.rows[0].count / Number(limit));
-		return maxPage === 0 ? ++maxPage :
-			Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage
+		return maxPage === 0 ? ++maxPage
+			: Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage;
 	}
 
-	public static countRows() {
+	public static countRows(): Promise<number> {
 		return UserService.knex.raw('SELECT count(*) FROM users').then((user) => user).catch((err) => err);
+	}
+
+	public static clearTable() {
+		return UserService.knex('users').del();
+	}
+
+	public static seedTable(): Promise<any> {
+		return seed(UserService.knex);
 	}
 }

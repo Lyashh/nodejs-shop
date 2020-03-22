@@ -1,7 +1,12 @@
 import joi from '@hapi/joi';
 
+interface ValidationResult {
+	value: { [key: string]: string | number };
+	error: { [key: string]: string | number | object | Array<string | object> };
+}
+
 export default class Joi {
-	public static userValidation(user) {
+	public static userValidation(user): ValidationResult {
 		const schema = joi.object({
 			name: joi.string()
 				.alphanum()
@@ -21,7 +26,7 @@ export default class Joi {
 		return schema.validate(user);
 	}
 
-	public static loginValidation(user) {
+	public static loginValidation(user): ValidationResult {
 		const schema = joi.object({
 			email: joi.string()
 				.email()
