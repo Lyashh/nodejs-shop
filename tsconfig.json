@@ -58,6 +58,7 @@
     "node_modules",
     ".npm",
 	"src/database/knexfile.ts",
-	"tests"
-  ]
+	"src/tests",
+	"src/tests/**/*"
+  ],
 }

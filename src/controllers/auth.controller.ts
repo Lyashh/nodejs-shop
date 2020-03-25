@@ -3,24 +3,29 @@ import bcrypt from 'bcrypt';
 import Validation from '../services/validation/joi';
 import UserService from '../services/db/user.service';
 
-
 export default class AuthControoller {
-	public googleCallback(req: Request, res: Response) : Response {
+	private userService: UserService
+
+	constructor() {
+		this.userService = new UserService()
+	}
+
+	public googleCallback(req: Request, res: Response): Response {
 		if (req.isAuthenticated()) {
 			return res.json({ message: 'success', detail: req.session!.passport.user });
 		}
 		return res.json({ message: 'error', detail: 'cant auth' });
 	}
 
-	public registration(req: Request, res: Response) {
+	public registration = (req: Request, res: Response) => {
 		req.body.user.registration_id = 1;
 		return bcrypt.hash(req.body.user.password, 10).then((hash) => {
 			req.body.user.password = hash;
-			return UserService.createorFindOne(req.body.user).then((result) => {
+			return this.userService.createorFindOne(req.body.user).then((result) => {
 				if (result.name === 'error') {
 					return res.json({ message: 'error', detail: result.detail });
 				}
-				return res.status(201).json({ result });
+				return res.status(201).json({ data: result });
 			}).catch((err) => res.json({ err }));
 		});
 	}
@@ -38,8 +43,9 @@ export default class AuthControoller {
 		return res.json({ message: 'success', detail: 'success logout' });
 	}
 
-	public failLogin(req: Request, res: Response) {
-		return res.json({ message: 'error', detail: req.session!.messages });
+	public failLogin(req: Request, res: Response): Response {
+		return res.status(req.session!.loginError.status || 422)
+			.json({ message: 'login error', detail: req.session!.loginError.message || 'Invalid username or password' });
 	}
 
 	public profile(req: Request, res: Response) {

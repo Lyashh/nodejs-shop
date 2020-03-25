@@ -1,20 +1,24 @@
-import passport from 'passport'
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import userService from '../db/user.service'
-import { Response, Request, NextFunction } from 'express'
-import { Strategy as LocalStrategy } from 'passport-local'
-import bcrypt from 'bcrypt'
-import doenv from 'dotenv'  //add env
+import passport from 'passport';
+import bcrypt from 'bcrypt';
+import doenv from 'dotenv';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Response, Request, NextFunction } from 'express';
+import { Strategy as LocalStrategy } from 'passport-local';
+
+import UserService from '../db/user.service';
 
 doenv.config();
 
 export default class Auth {
-	private static _instance: Auth
+	private static instance: Auth
 	private _localErrror: string
 	public _GoogleStrategy: GoogleStrategy
 	public _LocalStrategy: LocalStrategy
 	public _passport
+	private userService: UserService
+
 	private constructor() {
+		this.userService = new UserService()
 		this._localErrror = ''
 		this._passport = passport
 		this._GoogleStrategy = new GoogleStrategy({
@@ -27,7 +31,8 @@ export default class Auth {
 		this._LocalStrategy = new LocalStrategy({
 			usernameField: 'email',
 			passwordField: 'password',
-			session: true
+			session: true,
+			passReqToCallback: true,
 		}, this.localVerifyHandler)
 
 		this._passport.use(this._GoogleStrategy)
@@ -49,7 +54,7 @@ export default class Auth {
 			email: cb._json.email,
 			registration_id: 2
 		}
-		return userService.createorFindOne(user).then((result) => {
+		return this.userService.createorFindOne(user).then((result) => {
 			if (result.name == "error") {
 				return done({ message: 'error', detail: result.ditail, code: result.code }, null)
 			} else {
@@ -58,19 +63,37 @@ export default class Auth {
 		}).catch(err => done({ err }, null))
 	}
 
-	private localVerifyHandler(email, password, done) {
-		return userService.findByEmail(email).then(async user => {
+	private localVerifyHandler = (req, email, password, done) => {
+		return this.userService.findByEmail(email, true).then(async (user) => {
 			if (user) {
-				const match = await bcrypt.compare(password, user.password)
-				if (match) {
-					return done(null, { id: user.id, email: user.email, name: user.name, role_id: user.role_id });
-				} else {
-					return done(null, false, { message: 'Wrong password' })
+				try {
+					const match = await bcrypt.compare(password, user.password);
+					if (match) {
+						return done(null,
+							{
+								id: user.id,
+								email: user.email,
+								name: user.name,
+								role_id: user.role_id,
+							});
+					} else {
+						console.log('wrong password');
+						req.session.loginError = { message: 'Wrong password', status: 422 };
+						return done(null, false, { message: req.session.loginError.message });
+					}
+				} catch (e) {
+					req.session.loginError = { message: e, status: 500 };
+					return done(null, false, { message: e });
 				}
 			} else {
-				return done(null, false, { message: 'User with this email not found' })
+				req.session.loginError = { message: 'User with this email does not exist', status: 404 };
+				return done(null, false, { message: req.session.loginError.message });
 			}
 		})
+			.catch((err) => {
+				req.session.loginError = { message: err, status: 500 };
+				return done(null, false, { message: err });
+			});
 	}
 
 
@@ -84,17 +107,17 @@ export default class Auth {
 	}
 
 	public get googleMiddleware() {
-		return this._passport.authenticate('google')
+		return this._passport.authenticate('google');
 	}
 
 	public get localMiddleware() {
 		return this._passport.authenticate('local', {
 			failureRedirect: "/auth/login/callback",
-			failureMessage: "Invalid username or password"
+			//failureMessage: "Invalid username or password"
 		})
 	}
 
 	public static get getInstance(): Auth {
-		return this._instance || (this._instance = new this())
+		return this.instance || (this.instance = new this())
 	}
 }

@@ -1,17 +1,21 @@
 import log4js from 'log4js';
 import DB from '../../database/connection';
-import {seed} from '../../database/seeds/users'
+import MainDatabaseService from './mainDatbase.service'
+import { seed } from '../../database/seeds/users'
+import passport from 'passport';
 
 const logger = log4js.getLogger();
 logger.level = 'debug';
 
-export default class UserService {
-	public static knex = DB.getInstance.getConnection
+export default class UserService extends MainDatabaseService {
+	constructor() {
+		super()
+	}
 
-	public static createorFindOne(newUser): Promise<any> {
-		return UserService.knex('users').where('email', newUser.email).then((res) => {
+	public createorFindOne(newUser): Promise<any> {
+		return this.knex('users').where('email', newUser.email).then((res) => {
 			if (res.length === 0) {
-				return UserService.knex('users').insert(newUser).returning(['id', 'email', 'role_id', 'name']).then((res) => ({
+				return this.knex('users').insert(newUser).returning(['id', 'email', 'role_id', 'name']).then((res) => ({
 					message: 'New User',
 					user: res,
 				}))
@@ -21,28 +25,30 @@ export default class UserService {
 				message: 'User already exists',
 				user: {
 					id: res[0].id,
-					email: res[0].email,
-					name: res[0].name,
 				},
 			};
 		}).catch((err) => err);
 	}
 
-	public static findByEmail(email: string): Promise<any> {
-		return UserService.knex.select('u.id, u.name, u.email')
-			.from('users AS u')
-			.where('u.email', email)
+	public findByEmail(email: string, password = false): Promise<any> {
+		const fields: Array<string> = ['id', 'name', 'email'];
+		if (password) {
+			fields.push('password');
+		}
+		return this.knex.select(fields)
+			.from('users')
+			.where('email', email)
 			.first()
 			.then((user) => user)
 			.catch((err) => err);
 	}
 
-	public static findAll(): Promise<any> {
-		return UserService.knex('users').select(['id', 'name', 'email']).then((user) => user).catch((err) => err);
+	public findAll(): Promise<any> {
+		return this.knex('users').select(['id', 'name', 'email']).then((user) => user).catch((err) => err);
 	}
 
-	public static findById(id: number): Promise<any> {
-		return UserService.knex
+	public findById(id: number): Promise<any> {
+		return this.knex
 			.select('u.name', 'u.id', 'u.email', 'rol.title AS role', 'reg.title AS registration')
 			.from('users AS u')
 			.leftJoin('roles AS rol', 'u.role_id', 'rol.id')
@@ -53,20 +59,20 @@ export default class UserService {
 			.catch((err) => err);
 	}
 
-	public static deleteById(id: number): Promise<any> {
-		return UserService.knex('users').where('id', id).del().then((user) => user)
+	public deleteById(id: number): Promise<any> {
+		return this.knex('users').where('id', id).del().then((user) => user)
 			.catch((err) => err);
 	}
 
-	public static async paginate(page: number, limit: number) {
+	public async paginate(page: number, limit: number) {
 		let offset;
 		(page == 1) ? (offset = 0) : (offset = ((page - 1) * limit));
 
-		const info = await UserService.countRows();
-		const maxPage = await UserService.getMaxPage(info, Number(limit));
+		const info = await this.countRows();
+		const maxPage = await this.getMaxPage(info, Number(limit));
 
 
-		return UserService.knex
+		return this.knex
 			.select('u.name', 'u.id', 'u.email')
 			.from('users AS u')
 			.limit(limit).offset(offset)
@@ -79,21 +85,21 @@ export default class UserService {
 			.catch((err) => err);
 	}
 
-	public static getMaxPage(infoRows, limit: number): number {
+	private getMaxPage(infoRows, limit: number): number {
 		let maxPage = Math.trunc(infoRows.rows[0].count / Number(limit));
 		return maxPage === 0 ? ++maxPage
 			: Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage;
 	}
 
-	public static countRows(): Promise<number> {
-		return UserService.knex.raw('SELECT count(*) FROM users').then((user) => user).catch((err) => err);
+	public countRows(): Promise<number> {
+		return this.knex.raw('SELECT count(*) FROM users').then((user) => user).catch((err) => err);
 	}
 
-	public static clearTable() {
-		return UserService.knex('users').del();
+	public clearTable() {
+		return this.knex('users').del();
 	}
 
-	public static seedTable(): Promise<any> {
-		return seed(UserService.knex);
+	public seedTable(): Promise<any> {
+		return seed(this.knex);
 	}
 }

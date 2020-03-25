@@ -7,7 +7,7 @@ export async function seed(knex: Knex): Promise<any> {
             // Inserts seed entries
             return knex("delivery").insert([
                 { id: 1, title: "post" },
-                { id: 2, title: "google" },
+                { id: 2, title: "point of delivery" },
             ]);
         });
 };

@@ -6,16 +6,16 @@
   "modulesUrls": {
     "nodemon": "./node_modules/nodemon/bin/nodemon",
     "knex": "./node_modules/knex/bin/cli.js",
-	"eslint": "./node_modules/eslint/bin/eslint.js",
-	"typescript": "./node_modules/typescript/bin/tsc",
-	"mocha": "./node_modules/.bin/mocha"
+    "eslint": "./node_modules/eslint/bin/eslint.js",
+    "typescript": "./node_modules/typescript/bin/tsc",
+    "mocha": "./node_modules/.bin/mocha"
   },
   "knexfile": "--cwd src/database",
   "scripts": {
-    "ts-node": "./node_modules/ts-node/dist/bin.js",
     "ts:watch": "$npm_package_modulesUrls_typescript  -w",
-    "start": "node dist/app.js",
-    "dev-server": "node $npm_package_modulesUrls_nodemon dist/app.js",
+    "server:watch": "node $npm_package_modulesUrls_nodemon dist/app.js",
+    "ts-node": "./node_modules/ts-node/dist/bin.js",
+    "server:start": "node dist/app.js",
     "init-knexfile": "$npm_package_modulesUrls_knex init ",
     "migrate:create": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:make $NAME $npm_package_knexfile",
     "migrate:latest": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
@@ -28,7 +28,7 @@
     "eslint:init": "$npm_package_modulesUrls_eslint -- --init",
     "eslint:run": "$npm_package_modulesUrls_eslint ./src/**/*.ts; exit 0",
     "eslint:fix": "$npm_package_moduleUrls_eslint ./src/**/*.ts; exit 0",
-    "test": "$npm_package_modulesUrls_mocha -r ts-node/register ./tests/**/*.test.ts; exit 0;"
+    "test": "$npm_package_modulesUrls_mocha -r ts-node/register ./src/tests/**/*.test.ts; exit 0;"
   },
   "author": "Lyashh",
   "license": "ISC",
@@ -69,6 +69,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "mocha": "^7.1.1",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "tslint": "^6.1.0",
     "typescript": "^3.7.4"

@@ -11,6 +11,7 @@ export async function seed(knex: Knex): Promise<any> {
 					role_id = 2
 				}
 				users.push({
+					id: i + 1,
 					registration_id: 1,
 					email: `user_${i}@gmail.com`,
 					name: `name_${i}`,
