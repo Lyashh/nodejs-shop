@@ -29,6 +29,7 @@ module.exports = {
 		"import"
 	],
 	rules: {
+		'lines-between-class-members': ["error", "always", { exceptAfterSingleLine: true }],
 		'linebreak-style': ['error', 'windows'],
 		"indent": [2, "tab"],
 		"no-tabs": 0,
@@ -47,9 +48,7 @@ module.exports = {
 			}
 		]
 	},
-	/*"eslint.workingDirectories": [
-	  { "directory": "./src", "changeProcessCWD": true },
-	]*/
+
 	settings: {
 		"import/extensions": [".js", ".jsx", ".ts", ".tsx"],
 		"import/parsers": {

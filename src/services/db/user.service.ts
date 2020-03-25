@@ -64,35 +64,8 @@ export default class UserService extends MainDatabaseService {
 			.catch((err) => err);
 	}
 
-	public async paginate(page: number, limit: number) {
-		let offset;
-		(page == 1) ? (offset = 0) : (offset = ((page - 1) * limit));
-
-		const info = await this.countRows();
-		const maxPage = await this.getMaxPage(info, Number(limit));
-
-
-		return this.knex
-			.select('u.name', 'u.id', 'u.email')
-			.from('users AS u')
-			.limit(limit).offset(offset)
-			.then((users: Array<Record<string, any>>) => {
-				if (users.length) {
-					return { users, maxPage };
-				}
-				return { maxPage };
-			})
-			.catch((err) => err);
-	}
-
-	private getMaxPage(infoRows, limit: number): number {
-		let maxPage = Math.trunc(infoRows.rows[0].count / Number(limit));
-		return maxPage === 0 ? ++maxPage
-			: Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage;
-	}
-
-	public countRows(): Promise<number> {
-		return this.knex.raw('SELECT count(*) FROM users').then((user) => user).catch((err) => err);
+	public async paginate(page: number, limit: number): Promise<{items?: object; maxPage: number}> {
+		return this.paginateTable(page, limit, 'users', ['name', 'id', 'email']);
 	}
 
 	public clearTable() {

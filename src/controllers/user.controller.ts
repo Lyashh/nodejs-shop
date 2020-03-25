@@ -20,18 +20,18 @@ export default class UserControoller {
 
 
 	public pagination() {
-		return (req: Request, res: Response) => {
+		return (req: Request, res: Response): Promise<Response | undefined> => {
 			return this.userService.paginate(Number(req.params.page), Number(req.params.limit))
-				.then(async (data: { users?: Object; maxPage: Object; }) => {
-					if (data.users) {
+				.then(async (page: { items?: Object; maxPage: number }) => {
+					if (page.items) {
 						return res.json({
 							data: {
-								users: data.users,
-								maxPage: data.maxPage,
+								users: page.items,
+								maxPage: page.maxPage,
 							},
 						});
 					}
-					res.status(404).json({ message: `Page ${req.params.page} does not exist`, maxPage: data.maxPage });
+					res.status(404).json({ message: `Page ${req.params.page} does not exist`, maxPage: page.maxPage });
 				}).catch((err) => res.json(err));
 		}
 	}
