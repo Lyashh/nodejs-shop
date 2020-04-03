@@ -1,7 +1,8 @@
 import log4js from 'log4js';
 import DB from '../../database/connection';
-import MainDatabaseService from './mainDatbase.service'
-import { seed } from '../../database/seeds/users'
+import MainDatabaseService from './mainDatbase.service';
+import { PaginationData } from './mainDatbase.service';
+import { seed } from '../../database/seeds/users';
 import passport from 'passport';
 
 const logger = log4js.getLogger();
@@ -44,7 +45,7 @@ export default class UserService extends MainDatabaseService {
 	}
 
 	public findAll(): Promise<any> {
-		return this.knex('users').select(['id', 'name', 'email']).then((user) => user).catch((err) => err);
+		return this.getAll('users', ['id', 'name', 'email']);
 	}
 
 	public findById(id: number): Promise<any> {
@@ -64,7 +65,7 @@ export default class UserService extends MainDatabaseService {
 			.catch((err) => err);
 	}
 
-	public async paginate(page: number, limit: number): Promise<{items?: object; maxPage: number}> {
+	public async paginate(page: number, limit: number): Promise<PaginationData> {
 		return this.paginateTable(page, limit, 'users', ['name', 'id', 'email']);
 	}
 

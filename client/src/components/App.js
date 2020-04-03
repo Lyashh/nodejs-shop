@@ -1,20 +1,20 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { Container } from 'react-bootstrap'
 
-import Home from './pages/Home'
-
+import Home from './pages/home/Home'
 
 class App extends React.Component {
+
 	render() {
 		return (
-			<div className="container-fluid">
+			<Container fluid={true}>
 				<Router>
-						<Switch>
-							<Route path="/" exact render={ props => <Home {...props} /> } />
-						</Switch>
+					<Switch>
+						<Route path="/" exact render={props => <Home {...props} />} />
+					</Switch>
 				</Router>
-			</div>
+			</Container>
 		);
 	}
 }

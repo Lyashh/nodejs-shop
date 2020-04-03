@@ -1,0 +1,51 @@
+
+
+.headerRow {
+	background-color: seagreen;
+	width: 100%;
+	height: 100%;
+}
+
+.middleCol {
+	background-color: rgb(235, 201, 138);
+	background-image: url('../img/2428416.jpg');
+	position: relative;
+}
+
+.middleRow {
+	background-color: rgb(231, 203, 159);
+	width: 100%;
+	height: 100%;
+}
+
+.midImg1 {
+	content: url('../img/homeMiddle/2428416.png');
+	position: absolute;
+	top: 30%;
+	left: -3%;
+	width: auto;
+	height: 45%;
+}
+
+.midImg2 {
+	content: url('../img/homeMiddle/24284161.png');
+	position: absolute;
+	top: 10%;
+	left: -1%;
+	width: auto;
+	height: 55%;
+}
+
+.container-fluid {
+	padding-right: 0!important;
+	padding-left: 0!important;
+	margin-right: 0!important;
+	margin-left: 0!important;
+  }
+
+  .row {
+    margin-right: 0!important;
+    margin-left: 0!important;
+}
+
+

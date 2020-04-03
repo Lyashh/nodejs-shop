@@ -1,33 +1,34 @@
 import { Response, Request } from 'express';
-import UserService from '../services/db/user.service'
+import UserService from '../services/db/user.service';
 
 export default class UserControoller {
 	public userService: UserService
 	constructor() {
-		this.userService = new UserService()
+		this.userService = new UserService();
 	}
 
 	public getAll() {
-		return (req: Request, res: Response) => {
-			return this.userService.findAll().then((users) => {
-				if (users.errno || users.name === 'error') {
-					return res.json({ error: users });
+		return (req: Request, res: Response): Promise<Response> => {
+			return this.userService.findAll().then((data) => {
+				if (data.errno || data.name === 'error') {
+					return res.json({ error: data });
 				}
-				return res.json({ users });
+				return res.json({ data });
 			}).catch((err) => res.json({ err }));
 		}
 	}
 
 
 	public pagination() {
-		return (req: Request, res: Response): Promise<Response | undefined> => {
+		return (req: Request, res: Response): Promise<any> => {
 			return this.userService.paginate(Number(req.params.page), Number(req.params.limit))
-				.then(async (page: { items?: Object; maxPage: number }) => {
+				.then(async (page) => {
 					if (page.items) {
 						return res.json({
 							data: {
 								users: page.items,
 								maxPage: page.maxPage,
+								currentPage: page.currentPage,
 							},
 						});
 					}
@@ -46,7 +47,6 @@ export default class UserControoller {
 			}).catch((err) => res.json({ err }));
 		}
 	}
-	
 
 	public deleteUser() {
 		return (req: Request, res: Response) => {
@@ -58,5 +58,5 @@ export default class UserControoller {
 			}).catch((err) => res.json({ err }));
 		}
 	}
-	
+
 }
