@@ -10,6 +10,14 @@ export async function up(knex: Knex): Promise<any> {
 			table.increments('id').primary();
 			table.string('title').notNullable();
 		})
+		.createTable('delivery', (table) => {
+			table.increments('id').primary();
+			table.string('title');
+		})
+		.createTable('category', (table) => {
+			table.increments('id').primary();
+			table.string('title');
+		})
 		.createTable('users', (table) => {
 			table.increments();
 			table.bigInteger('registration_id').unsigned().notNullable()
@@ -39,14 +47,6 @@ export async function up(knex: Knex): Promise<any> {
 			table.boolean('paid').notNullable().defaultTo(false)
 			table.timestamp('created_at').defaultTo(knex.fn.now())
 			table.timestamp('updated_at').defaultTo(knex.fn.now())
-		})
-		.createTable('delivery', (table) => {
-			table.increments();
-			table.string('title');
-		})
-		.createTable('category', (table) => {
-			table.increments();
-			table.string('title');
 		});
 }
 
@@ -59,5 +59,4 @@ export async function down(knex: Knex): Promise<any> {
 		.dropTable('cart')
 		.dropTable('delivery')
 		.dropTable('category');
-
 }
