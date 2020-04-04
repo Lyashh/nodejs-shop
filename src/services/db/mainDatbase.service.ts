@@ -13,7 +13,7 @@ export default abstract class MainDatabaseService {
 		this.connection = DB.getInstance.getConnection;
 	}
 
-	public getAll(table: string, fields: Array<string>): Promise<{ items: Array<object> }> {
+	public getAll(table: string, fields: Array<string>): Promise<Array<any>> {
 		return this.knex(table).select(fields).then((items) => items).catch((err) => err);
 	}
 
