@@ -18,6 +18,7 @@ export default class UsersRouter {
 
 	public get routes() {
 		this.router.get('/', /* this.roleMiddleware.isAdmin, */ this.userController.getAll());
+		this.router.get('/byRole/:role', this.roleMiddleware.roleExist(), this.userController.getAll());
 		this.router.get('/:page/:limit', /* this.roleMiddleware.isAdmin, */ this.userController.pagination());
 		this.router.get('/:id', this.validationMiddleware.paramIsNumber(['id']), this.userController.getById());
 		this.router.delete('/:id', /* this.roleMiddleware.isAdmin, */ this.userController.deleteUser());
