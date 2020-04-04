@@ -5,23 +5,32 @@
   "main": "dist/app[.js",
   "modulesUrls": {
     "nodemon": "./node_modules/nodemon/bin/nodemon",
-    "knex": "./node_modules/knex/bin/cli.js"
+    "knex": "./node_modules/knex/bin/cli.js",
+    "eslint": "./node_modules/eslint/bin/eslint.js",
+    "typescript": "./node_modules/typescript/bin/tsc",
+    "mocha": "./node_modules/.bin/mocha"
   },
   "knexfile": "--cwd src/database",
   "scripts": {
-    "ts": "./node_modules/typescript/bin/tsc -w",
-    "start": "node dist/app.js",
-    "dev-server": "node $npm_package_modulesUrls_nodemon dist/app.js",
+    "ts:watch": "$npm_package_modulesUrls_typescript  -w",
+    "server:watch": "node $npm_package_modulesUrls_nodemon dist/app.js",
+    "ts-node": "./node_modules/ts-node/dist/bin.js",
+    "server:start": "node dist/app.js",
     "init-knexfile": "$npm_package_modulesUrls_knex init ",
-    "migrate:create": "npx ts-node $npm_package_modulesUrls_knex migrate:make $NAME $npm_package_knexfile",
-    "migrate:latest": "npx ts-node $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
-    "migrate:rollback": "npx ts-node $npm_package_modulesUrls_knex migrate:rollback $npm_package_knexfile",
-    "migrate:down": "npx ts-node $npm_package_modulesUrls_knex migrate:down $npm_package_knexfile",
-    "migrate:up": "npx ts-node $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
-    "seed:create": "npx ts-node $npm_package_modulesUrls_knex seed:make $NAME $npm_package_knexfile",
-    "seed:run": "npx ts-node $npm_package_modulesUrls_knex seed:run $npm_package_knexfile"
+    "migrate:create": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:make $NAME $npm_package_knexfile",
+    "migrate:latest": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
+    "migrate:rollback": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:rollback $npm_package_knexfile",
+    "migrate:down": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:down $npm_package_knexfile",
+    "migrate:up": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
+    "seed:create": "npm run ts-node -- $npm_package_modulesUrls_knex seed:make $NAME $npm_package_knexfile",
+    "seed:run": "npm run ts-node -- $npm_package_modulesUrls_knex seed:run $npm_package_knexfile",
+    "eslint": "./node_modules/eslint/bin/eslint.js; exit 0",
+    "eslint:init": "$npm_package_modulesUrls_eslint -- --init",
+    "eslint:run": "$npm_package_modulesUrls_eslint ./src/**/*.ts; exit 0",
+    "eslint:fix": "$npm_package_moduleUrls_eslint ./src/**/*.ts; exit 0",
+    "test": "$npm_package_modulesUrls_mocha -r ts-node/register ./src/tests/**/*.test.ts; exit 0;"
   },
-  "author": "",
+  "author": "Lyashh",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.0",
@@ -33,7 +42,6 @@
     "@types/passport": "^1.0.2",
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-local": "^1.0.33",
-    "@types/restify": "^8.4.2",
     "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -45,10 +53,25 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.17.1"
+    "pg": "^7.17.1",
+    "ts-node": "^8.7.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "mocha": "^7.1.1",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
+    "tslint": "^6.1.0",
     "typescript": "^3.7.4"
   }
 }

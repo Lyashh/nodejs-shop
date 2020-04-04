@@ -1,18 +1,20 @@
-import Knex from 'knex'
-import Config from '../knexfile'
+import Knex from 'knex';
+import Config from '../knexfile';
 
 export default class Connection {
-    private  static _instance: Connection
-    public _connection: Knex
-    private constructor() {
-        this._connection = Knex(Config as Knex.Config)
-    }
+	private static instance: Connection
+	private connection: Knex;
 
-    public get getConnection() {
-        return this._connection
-    }
+	private constructor() {
+		this.connection = Knex(Config);
+	}
 
-    public static get getInstance(): Connection {
-        return this._instance || (this._instance = new this())
-    }
+	public get getConnection(): Knex {
+		return this.connection
+	}
+
+	public static get getInstance(): Connection {
+		const instance = this.instance || (this.instance = new this());
+		return instance;
+	}
 }

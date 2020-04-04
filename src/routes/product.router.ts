@@ -1,16 +1,21 @@
-import { Router as ExpressRouter } from 'express'
-import ItemController  from '../controllers/product.controller'
-
+import { Router as ExpressRouter } from 'express';
+import ProductController from '../controllers/product.controller';
+import ValidationMiddleware from '../middleware/validation.middleware'
 
 export default class RootRouter {
-    public  _router: ExpressRouter
-    public _productController: ItemController
-    constructor() {
-        this._productController = new ItemController()
-        this._router = ExpressRouter();
-    }
-    public get routes() {
-        //this._router.get('/', this._rootController.index)
-        return this._router
-    }
+	private router: ExpressRouter
+	private productController: ProductController
+	private validationMiddleware: ValidationMiddleware;
+
+	constructor() {
+		this.validationMiddleware = new ValidationMiddleware();
+		this.productController = new ProductController();
+		this.router = ExpressRouter();
+	}
+
+	public get routes(): ExpressRouter {
+		this.router.get('/', this.productController.getAll());
+		this.router.get('/:id', this.validationMiddleware.paramIsNumber(['id']), this.productController.getById());
+		return this.router;
+	}
 }

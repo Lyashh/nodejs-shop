@@ -57,6 +57,8 @@
   "exclude": [
     "node_modules",
     ".npm",
-    "src/database/knexfile.ts"
-  ]
+	"src/database/knexfile.ts",
+	"src/tests",
+	"src/tests/**/*"
+  ],
 }

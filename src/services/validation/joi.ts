@@ -1,40 +1,44 @@
-import joi from '@hapi/joi'
+import joi from '@hapi/joi';
 
-export default class Joi {
-    public static async userValidation(user) {
-        const schema = joi.object({
-            name: joi.string()
-                .alphanum()
-                .min(1)
-                .max(40),
-            email: joi.string()
-                .email()
-                .min(8)
-                .max(30)
-                .required(),
-            password: joi.string()
-                .alphanum()
-                .min(8)
-                .max(30)
-                .required()
-        })
-        return await schema.validate(user)
-    }
-
-    public static async loginValidation(user) {
-        const schema = joi.object({
-            email: joi.string()
-                .email()
-                .min(8)
-                .max(30)
-                .required(),
-            password: joi.string()
-                .alphanum()
-                .min(8)
-                .max(30)
-                .required()
-        })
-        return await schema.validate(user)
-    }
+interface ValidationResult {
+	value: { [key: string]: string | number };
+	error: { [key: string]: string | number | object | Array<string | object> };
 }
 
+export default class Joi {
+	public static userValidation(user): ValidationResult {
+		const schema = joi.object({
+			name: joi.string()
+				.alphanum()
+				.min(1)
+				.max(40),
+			email: joi.string()
+				.email()
+				.min(8)
+				.max(30)
+				.required(),
+			password: joi.string()
+				.alphanum()
+				.min(8)
+				.max(30)
+				.required(),
+		});
+		return schema.validate(user);
+	}
+
+	public static loginValidation(user): ValidationResult {
+		const schema = joi.object({
+			email: joi.string()
+				.email()
+				.min(8)
+				.max(30)
+				.required(),
+			password: joi.string()
+				.alphanum()
+				.min(8)
+				.max(30)
+				.required(),
+		});
+		return schema.validate(user);
+	}
+}

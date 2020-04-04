@@ -1,49 +1,54 @@
-import { Response, Request, NextFunction } from 'express'
-import bcrypt from 'bcrypt'
-import Validation from '../services/validation/joi'
-import UserService from '../services/db/user.service'
+import { Response, Request, NextFunction } from 'express';
+import bcrypt from 'bcrypt';
+import Validation from '../services/validation/joi';
+import UserService from '../services/db/user.service';
 
 export default class AuthControoller {
-    public googleCallback(req: Request, res: Response) : Response {
-        if(req.isAuthenticated()) {
-            return res.json({message: "success", detail: req.session!.passport.user})
-        } else {
-            return res.json({message: "error", detail: "cant auth"})
-        }
-    }
+	private userService: UserService
 
-    public registration(req: Request, res: Response) {
-        req.body.user.registration_id = 1
-        return bcrypt.hash(req.body.user.password, 10).then(hash => {
-            req.body.user.password = hash
-            return UserService.createorFindOne(req.body.user).then((result) => {
-                if(result.name=="error") {
-                    return res.json({message: 'error', detail: result.detail})
-                } else {
-                    return res.status(201).json({result})
-                }  
-            }).catch(err => res.json({err}))
-        })
-    }
+	constructor() {
+		this.userService = new UserService()
+	}
 
-    public login(req: Request, res: Response) {
-        res.json({message: 'success', detail: req.session!.passport.user});
-    }
+	public googleCallback(req: Request, res: Response): Response {
+		if (req.isAuthenticated()) {
+			return res.json({ message: 'success', detail: req.session!.passport.user });
+		}
+		return res.json({ message: 'error', detail: 'cant auth' });
+	}
 
-    public localCallback(req: Request, res: Response) {
-        res.json({message: 'error', detail: req.session!.messages});
-    }
+	public registration = (req: Request, res: Response) => {
+		req.body.user.registration_id = 1;
+		return bcrypt.hash(req.body.user.password, 10).then((hash) => {
+			req.body.user.password = hash;
+			return this.userService.createorFindOne(req.body.user).then((result) => {
+				if (result.name === 'error') {
+					return res.json({ message: 'error', detail: result.detail });
+				}
+				return res.status(201).json({ data: result });
+			}).catch((err) => res.json({ err }));
+		});
+	}
 
-    public logout(req: Request, res: Response) {
-        req.logout();
-        return res.json({message: "success", detail: "success logout"})
-    }
+	public login(req: Request, res: Response) {
+		res.json({ message: 'success', detail: req.session!.passport.user });
+	}
 
-    public failLogin(req: Request, res: Response) {
-        return res.json({message: "error", detail: req.session!.messages})
-    }
+	public localCallback(req: Request, res: Response) {
+		res.json({ message: 'error', detail: req.session!.messages });
+	}
 
-    public profile(req: Request, res: Response) {
-        return res.json({message: "success", detail: "login", user: req.session!.passport.user})
-    }
+	public logout(req: Request, res: Response) {
+		req.logout();
+		return res.json({ message: 'success', detail: 'success logout' });
+	}
+
+	public failLogin(req: Request, res: Response): Response {
+		return res.status(req.session!.loginError.status || 422)
+			.json({ message: 'login error', detail: req.session!.loginError.message || 'Invalid username or password' });
+	}
+
+	public profile(req: Request, res: Response) {
+		return res.json({ message: 'success', detail: 'login', user: req.session!.passport.user });
+	}
 }
