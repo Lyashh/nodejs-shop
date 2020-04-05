@@ -41,23 +41,26 @@ export async function up(knex: Knex): Promise<any> {
 		})
 		.createTable('cart', (table) => {
 			table.increments();
-			table.integer('user_id').notNullable()
-			table.integer('product_id').notNullable()
-			table.integer('delivery_id').notNullable()
 			table.integer('quantity').notNullable()
 			table.boolean('paid').notNullable().defaultTo(false)
 			table.timestamp('created_at').defaultTo(knex.fn.now())
 			table.timestamp('updated_at').defaultTo(knex.fn.now())
+			table.bigInteger('user_id').unsigned().notNullable()
+				.references('id').inTable('category').onDelete('CASCADE').index();
+			table.bigInteger('product_id').unsigned().notNullable()
+				.references('id').inTable('category').onDelete('CASCADE').index();
+			table.bigInteger('delivery_id').unsigned().notNullable()
+				.references('id').inTable('category').onDelete('CASCADE').index();
 		});
 }
 
 export async function down(knex: Knex): Promise<any> {
 	return knex.schema
 		.dropTable('users')
-		.dropTable('registration')
-		.dropTable('roles')
 		.dropTable('products')
 		.dropTable('cart')
+		.dropTable('registration')
+		.dropTable('roles')
 		.dropTable('delivery')
-		.dropTable('category');
+		.dropTable('category')
 }

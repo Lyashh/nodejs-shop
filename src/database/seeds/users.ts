@@ -2,13 +2,13 @@ import * as Knex from "knex";
 
 // eslint-disable-next-line import/prefer-default-export
 export async function seed(knex: Knex): Promise<any> {
-	return knex("users").del()
+	return knex('users').del()
 		.then(() => {
 			let users: Array<Object> = []
 			for (let i = 0; i <= 20; i++) {
-				let role_id = 1
+				let role_id = 1;
 				if (i % 5 == 0) {
-					role_id = 2
+					role_id = 2;
 				}
 				users.push({
 					id: i + 1,
@@ -19,6 +19,6 @@ export async function seed(knex: Knex): Promise<any> {
 					role_id
 				})
 			}
-			return knex("users").insert(users);
+			return knex('users').insert(users);
 		});
-};
+}
