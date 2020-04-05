@@ -2,7 +2,7 @@
   "name": "express-rest-api-shop",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app[.js",
+  "main": "dist/app.js",
   "modulesUrls": {
     "nodemon": "./node_modules/nodemon/bin/nodemon",
     "knex": "./node_modules/knex/bin/cli.js",

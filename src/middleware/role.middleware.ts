@@ -23,7 +23,12 @@ export default class RoleMiddleware {
 		return async (req: Request, res: Response, next: NextFunction) => {
 			const role = req.params.role.toString();
 			const roles = await this.roleService.findAll();
-			const exist = roles.some(el => el.title === role);
+			const exist = roles.some((el) => {
+				if (el.title === role) {
+					req.params.roleId = el.id;
+				}
+				return el.title === role;
+			});
 			if (exist) {
 				return next();
 			}

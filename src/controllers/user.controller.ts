@@ -48,6 +48,14 @@ export default class UserControoller {
 		}
 	}
 
+	public getByRole() {
+		return (req: Request, res: Response) => {
+			return this.userService.findByRole(parseInt(req.params.roleId)).then((users) => {
+				return res.json({ users });
+			}).catch((err) => res.json({ err }));
+		}
+	}
+
 	public deleteUser() {
 		return (req: Request, res: Response) => {
 			return this.userService.deleteById(Number(req.params.id)).then((user) => {
