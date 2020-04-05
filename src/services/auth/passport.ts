@@ -18,12 +18,12 @@ export default class Auth {
 	private userService: UserService
 
 	private constructor() {
-		this.userService = new UserService()
+		this.userService = new UserService();
 		this._localErrror = ''
 		this._passport = passport
 		this._GoogleStrategy = new GoogleStrategy({
-			clientID: process.env.CLIENT_ID as string,
 			clientSecret: process.env.CLIENT_SECRET as string,
+			clientID: process.env.CLIENT_ID as string,
 			callbackURL: '/auth/google/callback',
 			passReqToCallback: true,
 		}, this.googleVerifyHandler)

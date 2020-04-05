@@ -60,6 +60,13 @@ export default class UserService extends MainDatabaseService {
 			.catch((err) => err);
 	}
 
+	public findByRole(roleId: number): Promise<any> {
+		return this.knex('users')
+			.select('*')
+			.where('role_id', roleId)
+			.then((res) => res);
+	}
+
 	public deleteById(id: number): Promise<any> {
 		return this.knex('users').where('id', id).del().then((user) => user)
 			.catch((err) => err);
