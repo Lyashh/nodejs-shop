@@ -5,13 +5,20 @@ export default class CartService extends MainDatabaseService {
 		super()
 	}
 
-	public findAll() {
+	public findAll(): Promise<any> {
 		return this.getAll('cart', ['*']);
 	}
 
-	public addOneByAuth(item: { user_id: number; product_id: number }) {
-		return this.knex('cart').insert(item)
-			.then((res) => res)
+	public async addOrUpdateAuth(item): Promise<any> {
+		const cartQuery = this.knex('cart').select('*')
+			.where('user_id', item.user_id).andWhere('product_id', item.product_id);
+		return cartQuery.then((cart: Array<any>) => {
+			if (cart.length > 0) {
+				return cartQuery.update({ quantity: item.quantity + cart[0].quantity }).returning('*');
+			} else {
+				return this.knex('cart').insert(item).returning('*');
+			}
+		})
 			.catch((err) => err);
 	}
 }
