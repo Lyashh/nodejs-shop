@@ -1,13 +1,17 @@
 import { Response, Request, NextFunction } from 'express';
 import Validation from '../services/validation/joi';
 
+export interface CartRequest extends Request {
+	cart?: any;
+}
+
 export default class ValidationMiddleware {
 	public async registerUserValidation(req: Request, res: Response, next: NextFunction) {
 		if (req.body.user) {
-			const validResylt = await Validation.userValidation(req.body.user);
-			if (validResylt.error) {
+			const validResult = await Validation.userValidation(req.body.user);
+			if (validResult.error) {
 				return res.status(422).json({
-					error: validResylt.error.details[0],
+					error: validResult.error.details[0],
 					message: 'validation fails',
 				});
 			}
@@ -19,12 +23,12 @@ export default class ValidationMiddleware {
 
 	public async loginValidation(req: Request, res: Response, next: NextFunction) {
 		if (req.body.password && req.body.email) {
-			const validResylt = await Validation.loginValidation({
+			const validResult = await Validation.loginValidation({
 				email: req.body.email,
 				password: req.body.password,
 			});
-			if (validResylt.error) {
-				return res.status(422).json({ error: validResylt.error.details[0] });
+			if (validResult.error) {
+				return res.status(422).json({ error: validResult.error.details[0] });
 			}
 			return next();
 		} else {
@@ -32,6 +36,21 @@ export default class ValidationMiddleware {
 				error: 'Request dont have any of this fields "password", "email"',
 				message: 'validation fails',
 			});
+		}
+	}
+
+	public cartValidation() {
+		return async (req: CartRequest, res: Response, next: NextFunction) => {
+			if (req.body.data) {
+				const validResult = await Validation.cartValidation(req.body.data);
+				if (validResult.error) {
+					return res.status(422).json({ error: validResult.error.details[0] });
+				} else {
+					req.cart = validResult.value;
+					return next();
+				}
+			}
+			return res.status(422).json({ error: 'Request dont have field "item"', message: 'validation fails' });
 		}
 	}
 
@@ -51,5 +70,5 @@ export default class ValidationMiddleware {
 		};
 	}
 
-	
+
 }

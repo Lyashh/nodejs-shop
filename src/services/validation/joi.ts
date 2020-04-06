@@ -51,16 +51,18 @@ export default class Joi {
 		const schema = joi.object({
 			user_id: joi.number()
 				.integer()
-				.min(1)
-				.required(),
-			product_id: joi.number()
-				.integer()
-				.min(1)
-				.required(),
-			quantity: joi.number()
-				.integer()
-				.min(1)
-				.required(),
+				.min(1),
+			guest: joi.boolean().required(),
+			item: joi.object({
+				product_id: joi.number()
+					.integer()
+					.min(1)
+					.required(),
+				quantity: joi.number()
+					.integer()
+					.min(1)
+					.required(),
+			}),
 		});
 		return schema.validate(item);
 	}
