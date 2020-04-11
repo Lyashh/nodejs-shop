@@ -6,6 +6,10 @@ export async function up(knex: Knex): Promise<any> {
 			table.increments('id').primary();
 			table.string('title').notNullable();
 		})
+		.createTable('status', (table) => {
+			table.increments('id').primary();
+			table.string('title').notNullable();
+		})
 		.createTable('roles', (table) => {
 			table.increments('id').primary();
 			table.string('title').notNullable();
@@ -40,27 +44,38 @@ export async function up(knex: Knex): Promise<any> {
 				.references('id').inTable('category').onDelete('CASCADE').index();
 		})
 		.createTable('cart', (table) => {
-			table.increments();
-			table.integer('quantity').notNullable()
-			table.boolean('paid').notNullable().defaultTo(false)
-			table.timestamp('created_at').defaultTo(knex.fn.now())
-			table.timestamp('updated_at').defaultTo(knex.fn.now())
+			table.increments('id').primary();
+			table.integer('quantity').notNullable();
+			table.timestamp('created_at').defaultTo(knex.fn.now());
+			table.timestamp('updated_at').defaultTo(knex.fn.now());
 			table.bigInteger('user_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
 			table.bigInteger('product_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
-			table.bigInteger('delivery_id').unsigned().notNullable()
+		})
+		.createTable('order', (table) => {
+			table.increments();
+			table.float('sum').notNullable();
+			table.boolean('paid').notNullable();
+			table.specificType('intarray', 'integer ARRAY').notNullable();
+			table.bigInteger('user_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
+			table.bigInteger('status_id').unsigned().notNullable()
+				.references('id').inTable('status').onDelete('CASCADE').index();
+			table.timestamp('created_at').defaultTo(knex.fn.now());
+			table.timestamp('updated_at').defaultTo(knex.fn.now());
 		});
 }
 
 export async function down(knex: Knex): Promise<any> {
 	return knex.schema
 		.dropTable('users')
+		.dropTable('order')
 		.dropTable('products')
 		.dropTable('cart')
 		.dropTable('registration')
 		.dropTable('roles')
 		.dropTable('delivery')
 		.dropTable('category')
+		.dropTable('status');
 }
