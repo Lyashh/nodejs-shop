@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import App from './components/App';
+import App from './components/app';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
