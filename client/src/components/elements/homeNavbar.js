@@ -10,17 +10,28 @@ class NavbarComponent extends React.Component {
           <Navbar.Brand href="#home">
             <div class="logo">
               <div class="site-logo">
-                <div href="#" class="js-logo-clone">bonsai shop</div>
+                <div class="js-logo-clone">bonsai shop</div>
+                <img className="logoIcon" />
               </div>
             </div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end"> 
+          <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-center">
+            <Nav className="justify-content-center">
+              <Nav.Link >Shop</Nav.Link>
+              <Nav.Link >Contacts</Nav.Link>
+              <Nav.Link >About</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+
+          <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
             <Nav className="justify-content-end">
-              <Nav.Link href="#deets">More deets</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                Dank memes
-      </Nav.Link>
+              <Nav.Link className="inherit-nav-link">
+                <img className="cartIcon" />
+                <div class="circle">
+                  1
+                </div>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

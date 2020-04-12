@@ -1,36 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap");
 
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .wrapper {
-    padding: 0!important;
+  padding: 0 !important;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .site-logo div {
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: .15em;
-    font-size: 20px;
-    padding: 9px;
-    padding-left: 20px;
-    padding-right: 20px;
-    color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 20px;
+  padding: 9px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #000;
+  display: inline-block;
+}
+
+.site-logo {
+  display: inline-block;
 }
 
 .navbar_container {
-    height: 75px;
+  height: 75px;
 }
 
 .home_header {
-    padding-top: 30px;
-    height: 800px;
-    background-color: rgb(108, 197, 73);
-    background-image: url('../img/header2190.jpg');
-    background-size: cover;
+  padding-top: 30px;
+  height: 800px;
+  background-color: rgb(108, 197, 73);
+  background-image: url("../img/header2190.jpg");
+  background-size: cover;
 }
+
+.logoIcon {
+  content: url("../img/icons/bonsai.svg");
+  height: 50px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.cartIcon {
+  content: url("../img/icons/shopping-cart.svg");
+  height: 40px;
+  display: inline-block;
+}
+
+.circle {
+  margin-top: 9px;
+  margin-left: 15px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+  background: #14a085;
+}
+
+.navbar-nav a {
+  display: inherit;
+}
+
+.header-text-bold {
+  font-weight: 700;
+}
+
+.header-row {
+    margin-top: 120px;
+}
+
+.header-text {
+    margin-top: 40px;
+    width: 70%;
+}
+
+.header-button-div {
+    margin-top: 60px;
+    margin-right: 130px;
+    text-align: center;
+}
+
+.header-button-div button {
+    width: 130px;
+    height: 40px;
+    background-color: #14A085;
+    border-color: #14A085;
+    border-radius: 18px;
+}
+
+.header-button-div button:hover {
+    background-color: #f3b58c;
+    border-color: #f3b58c;
+}
+
+
