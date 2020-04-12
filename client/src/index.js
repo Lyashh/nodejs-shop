@@ -1,15 +1,28 @@
+/* eslint-disable import/first */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from './reducers/index'
+
 import './css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const store = createStore(reducer)
+store.subscribe(() => {
+  console.log('subscribe', store.getState())
+})
 
 import App from './components/app';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

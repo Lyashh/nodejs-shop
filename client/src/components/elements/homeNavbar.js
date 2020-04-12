@@ -8,9 +8,9 @@ class NavbarComponent extends React.Component {
       <Container>
         <Navbar collapseOnSelect expand="lg" className="navbar_container">
           <Navbar.Brand href="#home">
-            <div class="logo">
-              <div class="site-logo">
-                <div class="js-logo-clone">bonsai shop</div>
+            <div className="logo">
+              <div className="site-logo">
+                <div className="js-logo-clone">bonsai shop</div>
                 <img className="logoIcon" />
               </div>
             </div>
@@ -28,7 +28,7 @@ class NavbarComponent extends React.Component {
             <Nav className="justify-content-end">
               <Nav.Link className="inherit-nav-link">
                 <img className="cartIcon" />
-                <div class="circle">
+                <div className="circle">
                   1
                 </div>
               </Nav.Link>
