@@ -53,15 +53,15 @@ a {
 
 .cartIcon {
   content: url("../img/icons/shopping-cart.svg");
-  height: 40px;
+  height: 34px;
   display: inline-block;
 }
 
 .circle {
   margin-top: 9px;
   margin-left: 15px;
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   font-size: 13px;
   color: #fff;
@@ -75,6 +75,7 @@ a {
 
 .header-text-bold {
   font-weight: 700;
+  font-size: 2.5em;
 }
 
 .header-row {
@@ -92,7 +93,13 @@ a {
     text-align: center;
 }
 
-.header-button-div button {
+.button_div_404 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+
+div .main_button {
     width: 130px;
     height: 40px;
     background-color: #14A085;
@@ -109,3 +116,31 @@ a {
   margin-top: 50px;
 }
 
+.title_404 {
+  margin-top: 20%;
+  font-size: 12em;
+  text-align: center;
+}
+
+.text_404 {
+  text-align: center;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: 350;
+}
+
+.input-range__track--active {
+  background: #14A085!important;
+}
+.input-range__slider {
+  background: #14A085!important;
+  border: 1px solid #14A085!important;
+}
+
+.input-range__label {
+  /* color: #aaaaaa; */
+  font-family: "Helvetica Neue", san-serif;
+  font-size: 0.8rem;
+  transform: translateZ(0);
+  white-space: nowrap;
+}

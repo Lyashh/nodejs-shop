@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Navbar from './elements/navbar'
 import Home from './pages/home/home'
 import Shop from './pages/shop/shop'
+import NotFound from './pages/404'
 
 class App extends React.Component {
 	constructor(props) {
@@ -15,11 +16,12 @@ class App extends React.Component {
 	render() {
 		return (
 			<Container fluid={true} className="wrapper" style={{height: '100%'}}>
-					{this.props.page == 'home' ? null : <Navbar />}
 					<Router>
+					{(this.props.page == 'home' || this.props.page == '404') ? null : <Navbar />}
 						<Switch>
 							<Route path="/" exact render={props => <Home {...props} />} />
 							<Route path="/shop" exact render={props => <Shop {...props} />} />
+							<Route path="*" exact render={props => <NotFound {...props} />} />
 						</Switch>
 					</Router>
 			</Container>
