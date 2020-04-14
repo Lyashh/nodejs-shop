@@ -1,48 +1,63 @@
 import React from 'react';
-import InputRange from 'react-input-range';
-import 'react-input-range/lib/css/index.css'
+
+import Filter from './filter'
+import FilterRow from './filterRow'
+import Header from './header'
+
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'react-bootstrap'
+
+import Sticky from 'react-stickynode';
+
+
 
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            value: { min: 2, max: 10 },
-        };
     }
 
     componentDidMount() {
-		this.props.setPage('shop')
-	}
+        this.props.setPage('shop')
+    }
 
     render() {
         return (
-            <Container>
-                <Row className="main_shop_row">
-                    <Col md={9}>
-                    </Col>
-                    <Col md={3}>
-                        <div>
-                            <InputRange
-                                maxValue={20}
-                                minValue={0}
-                                value={this.state.value}
-                                onChange={value => this.setState({ value })} />
-                        </div>
-                    </Col>
+            <div>
+                <Header />
+                <Sticky enabled={true} top={0}>
+                   <FilterRow />
+                </Sticky>
+                <Container fluid={true} className="shop_container">
 
-                </Row>
-            </Container>
+                    <Row className="main_shop_row">
+
+                        <Col md={3}>
+                            <Sticky enabled={true} top={100} >
+                                <div>
+                                    <h1>
+                                        ssqssqsqsqsq
+                        </h1>
+                                </div>
+                            </Sticky>
+                        </Col>
+
+
+                        <Col md={9} className="p-50" style={{ height: '1200px', backgroundColor: "red", marginTop: '100px' }}>
+                        </Col>
+                    </Row>
+
+                </Container>
+
+
+            </div>
         );
     }
 }
 
 export default
-	connect(
-		state => ({}),
-		dispatch => ({
-			setPage: (page) => { dispatch({ type: 'SET_PAGE', payload: page }) }
-		})
-	)(Shop)
+    connect(
+        state => ({}),
+        dispatch => ({
+            setPage: (page) => { dispatch({ type: 'SET_PAGE', payload: page }) }
+        })
+    )(Shop)

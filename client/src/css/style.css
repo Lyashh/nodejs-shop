@@ -113,7 +113,7 @@ div .main_button {
 }
 
 .main_shop_row {
-  margin-top: 50px;
+  /*margin-top: 50px;*/
 }
 
 .title_404 {
@@ -129,18 +129,107 @@ div .main_button {
   font-weight: 350;
 }
 
+.input-range__track {
+  background: #AAD9B7!important;
+}
+
 .input-range__track--active {
-  background: #14A085!important;
+  background: #0e8870!important;
 }
 .input-range__slider {
-  background: #14A085!important;
-  border: 1px solid #14A085!important;
+  background: #0e8870!important;
+  border: 1px solid #0e8870!important;
 }
 
 .input-range__label {
-  /* color: #aaaaaa; */
-  font-family: "Helvetica Neue", san-serif;
-  font-size: 0.8rem;
-  transform: translateZ(0);
-  white-space: nowrap;
+  color: #000000!important; 
+  font-family: "Roboto", sans-serif!important;
 }
+
+.p-50 {
+  padding-top: 50px;
+}
+
+.p-100 {
+  margin-top: 100px;
+}
+
+.filter_text {
+  font-size: 17px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/*Checkboxes styles*/
+.categoryInput { display: none; }
+
+.categoryInput + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.categoryInput + label:last-child { margin-bottom: 0; }
+
+.categoryInput + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #0e8870;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .6;
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+.categoryInput:checked + label:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.filter_component {
+  margin-bottom: 40px;
+}
+
+.shop_container {
+  padding-left: 50px!important;
+  padding-right: 50px!important;
+}
+
+.d-block {
+  max-width: 100%;
+  height: auto;
+  content: url('../img/owl_flat_2000.jpg');
+}
+.filter_row_fluid {
+  margin: 0!important;
+  padding-left: 0px!important;
+  background-color: rgb(255, 255, 255);
+}
+.row_filter_container {
+  border-bottom: 1.4px solid #bdbdbd;
+  min-height: 50px;
+  padding: 0;
+}
+
+.sticky-inner-wrapper {
+  z-index: 500;
+}
+
