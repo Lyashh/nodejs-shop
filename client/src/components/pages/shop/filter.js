@@ -2,7 +2,6 @@ import React from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css'
 import { Col } from 'react-bootstrap'
-import { Sticky } from 'react-sticky';
 
 
 class Filter extends React.Component {
@@ -49,9 +48,7 @@ class Filter extends React.Component {
         })
 
         return (
-            <Sticky>
-                {({ style }) => (
-                    <header style={style} className="p-100">
+                    <header  className="p-70">
                         <div className="filter_component">
                             <p className="filter_text">CATEGORIES</p>
                             {category}
@@ -74,9 +71,7 @@ class Filter extends React.Component {
                                 onChange={ageFilter => this.setState({ ageFilter })} />
                         </div>
                     </header>
-                )}
-            </Sticky>
-        );
+                        );
     }
 }
 
