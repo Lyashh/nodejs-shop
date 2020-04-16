@@ -45,11 +45,11 @@ export async function up(knex: Knex): Promise<any> {
 		})
 		.createTable('products', (table) => {
 			table.increments();
-			table.string('years');
+			table.string('age');
 			table.string('title').notNullable();
 			table.text('description').notNullable();
 			table.float('price').notNullable();
-			table.string('main_photo').notNullable();
+			table.string('photo_url').notNullable();
 			table.bigInteger('category_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
 		})

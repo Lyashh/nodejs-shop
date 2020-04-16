@@ -9,7 +9,6 @@ export async function seed(knex: Knex): Promise<any> {
                 { id: 1, title: "Outdoor" },
                 { id: 2, title: "Indoor" },
                 { id: 3, title: "Artist Currated" },
-                { id: 4, title: "Flowering" },
             ]);
         });
 };
