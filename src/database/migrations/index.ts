@@ -2,7 +2,16 @@ import * as Knex from "knex";
 
 export async function up(knex: Knex): Promise<any> {
 	return knex.schema
+		.createTable('productsToPots', (table) => {
+			table.increments('id').primary();
+			table.bigInteger('product_id').notNullable();
+			table.bigInteger('pot_id').notNullable();
+		})
 		.createTable('registration', (table) => {
+			table.increments('id').primary();
+			table.string('title').notNullable();
+		})
+		.createTable('pots', (table) => {
 			table.increments('id').primary();
 			table.string('title').notNullable();
 		})
@@ -36,6 +45,7 @@ export async function up(knex: Knex): Promise<any> {
 		})
 		.createTable('products', (table) => {
 			table.increments();
+			table.string('years');
 			table.string('title').notNullable();
 			table.text('description').notNullable();
 			table.float('price').notNullable();
@@ -77,5 +87,7 @@ export async function down(knex: Knex): Promise<any> {
 		.dropTable('roles')
 		.dropTable('delivery')
 		.dropTable('category')
-		.dropTable('status');
+		.dropTable('status')
+		.dropTable('productsToPots')
+		.dropTable('pots');
 }

@@ -6,8 +6,10 @@ export async function seed(knex: Knex): Promise<any> {
         .then(() => {
             // Inserts seed entries
             return knex("category").insert([
-                { id: 1, title: "bonsai" },
-                { id: 2, title: "ivy" },
+                { id: 1, title: "Outdoor" },
+                { id: 2, title: "Indoor" },
+                { id: 3, title: "Artist Currated" },
+                { id: 4, title: "Flowering" },
             ]);
         });
 };

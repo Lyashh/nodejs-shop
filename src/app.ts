@@ -50,8 +50,8 @@ class App {
 		this.expressApp.use(Passport._passport.initialize());
 		this.expressApp.use(Passport._passport.session());
 
-		this.expressApp.set('port', process.env.PORT || 3000);
-		this.expressApp.use('/', this.router.routes);
+		this.expressApp.set('port', process.env.PORT || 3000)
+		this.expressApp.use(`/api/${process.env.API_VERSION}/`, this.router.routes);
 		this.expressApp.use((req, res, next) => {
 			res.status(404);
 			return res.json({ error: `Not found${req.originalUrl}` });

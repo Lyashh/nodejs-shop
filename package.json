@@ -7,18 +7,17 @@
     "nodemon": "./node_modules/nodemon/bin/nodemon",
     "knex": "./node_modules/knex/bin/cli.js",
     "eslint": "./node_modules/eslint/bin/eslint.js",
-    "typescript": "./node_modules/typescript/bin/tsc",
     "mocha": "./node_modules/.bin/mocha"
   },
   "knexfile": "--cwd src/database",
   "scripts": {
-    "ts:watch": "$npm_package_modulesUrls_typescript  -w",
-    "server:watch": "node $npm_package_modulesUrls_nodemon dist/app.js",
-    "ts-node": "./node_modules/ts-node/dist/bin.js",
+    "ts:watch": "npx typescript -w",
+    "server:watch": "npx nodemon -r dotenv/config dist/app.js",
+    "ts-node": "npx ts-node",
     "server:start": "node dist/app.js",
     "init-knexfile": "$npm_package_modulesUrls_knex init ",
     "migrate:create": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:make $NAME $npm_package_knexfile",
-    "migrate:latest": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
+    "migrate:latest": "export $(cat .env | xargs) && npm run ts-node -- $npm_package_modulesUrls_knex migrate:latest $npm_package_knexfile",
     "migrate:rollback": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:rollback $npm_package_knexfile",
     "migrate:down": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:down $npm_package_knexfile",
     "migrate:up": "npm run ts-node -- $npm_package_modulesUrls_knex migrate:up $npm_package_knexfile",
@@ -72,6 +71,6 @@
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "tslint": "^6.1.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.8.3"
   }
 }

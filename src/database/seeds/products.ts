@@ -4,124 +4,100 @@ export async function seed(knex: Knex): Promise<any> {
 	// Deletes ALL existing entries
 	return knex("products").del()
 		.then(() => {
-			// Inserts seed entries
+			let info = [
+				{title: 'Hawaiian Umbrella', url: 'url'}
+			]
+			let products: Array<Object> = []
 			return knex("products").insert([
 				{
-					title: "ВЯЗ МЕЛКОЛИСТНЫЙ",
+					title: "Hawaiian Umbrella",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 200,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 6
 				},
 				{
-					title: "ВЯЗ МЕЛКОЛИСТНЫЙ, МЕТЛОВИДНЫЙ",
+					title: "Golden Gate (Tiger Bark) Ficus",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 300,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 5
 				},
 				{
-					title: "КАРМОНА МЕТЛОВИДНАЯ",
+					title: "Dwarf Mini Jade Bonsai Tree",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 250,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 8
 				},
 				{
-					title: "ЗАНТОКСИЛУМ",
+					title: "Ginseng Grafted Ficus",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 350,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 9
 				},
 				{
-					title: "ФИКУС",
+					title: "Chinese Elm Bonsai",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 150,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 10
 				},
 				{
-					title: "СИЗИГИУМ МЕТЛОВИДНЫЙ",
+					title: "Dwarf Jade in Water Pot",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 550,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 14
 				},
 				{
-					title: "ЗАНТОКСИЛУМ",
+					title: "Green Mound Juniper - Procumbens Nana",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 950,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 9
 				},
 				{
-					title: "ПОРТУЛАКАРИЯ",
+					title: "Hawaiian Umbrella Exclusive Set",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 650,
 					main_photo: 'url',
-					category_id: 1
+					category_id: 2,
+					years: 10
 				},
 				{
-					title: "ПЛЮЩ",
+					title: "Money Tree Grove",
 					description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
 						"Donec et mi at urna blandit consectetur sit amet eget mauris. " +
-						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus," +
-						"vitae gravida ante elementum id. Nullam mollis orci diam, a tincidunt nisl gravida ut." +
-						"Curabitur tincidunt mollis aliquet. Maecenas eu mollis nisl. Fusce a ex hendrerit, posuere" +
-						"urna id, mattis eros. Vivamus mollis consectetur leo vitae scelerisque. Ut vitae magna non elit" +
-						" pharetra convallis. Nullam vel turpis ac risus tincidunt suscipit.",
+						"Nulla eget libero in massa fringilla efficitur. Vestibulum ultrices massa lectus",
 					price: 70,
 					main_photo: 'url',
-					category_id: 2
+					category_id: 2,
+					years: 11
 				}
 			]);
 		});

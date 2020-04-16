@@ -2,10 +2,12 @@ import knex from 'knex';
 import doenv from 'dotenv';
 // add env
 doenv.config();
+console.log(process.env.PG_URL);
+
 
 const database = {
 	client: 'postgresql',
-	connection: 'postgres://postgres:813621az@localhost:5432/typeorm',
+	connection: process.env.PG_URL,
 	migrations: {
 		directory: 'migrations',
 		tableName: 'knex_migrations',
