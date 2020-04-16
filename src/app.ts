@@ -46,6 +46,7 @@ class App {
 		this.expressApp.use(bodyParser.urlencoded({ extended: false }));
 		this.expressApp.use(bodyParser.json());
 		this.expressApp.use(cors());
+		this.expressApp.use(express.static(__dirname + '/static'));
 
 		this.expressApp.use(Passport._passport.initialize());
 		this.expressApp.use(Passport._passport.session());
