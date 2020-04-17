@@ -15,6 +15,24 @@ export default class ProductControoller {
 		}
 	}
 
+	public pagination() {
+		return (req: Request, res: Response): Promise<any> => {
+			return this.productService.paginate(Number(req.params.page), Number(req.params.limit))
+				.then(async (page) => {
+					if (page.items) {
+						return res.json({
+							data: {
+								users: page.items,
+								maxPage: page.maxPage,
+								currentPage: page.currentPage,
+							},
+						});
+					}
+					res.status(404).json({ message: `Page ${req.params.page} does not exist`, maxPage: page.maxPage });
+				}).catch((err) => res.json(err));
+		}
+	}
+
 	public getById() {
 		return (req: Request, res: Response): Promise<any> => {
 			return this.productService.findById(parseInt(req.params.id)).then((product) => {

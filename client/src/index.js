@@ -15,7 +15,7 @@ store.subscribe(() => {
   console.log('subscribe', store.getState())
 })
 
-import App from './components/app';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

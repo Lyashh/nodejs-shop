@@ -72,7 +72,7 @@ export default class UserService extends MainDatabaseService {
 			.catch((err) => err);
 	}
 
-	public async paginate(page: number, limit: number): Promise<PaginationData> {
+	public paginate(page: number, limit: number): Promise<PaginationData> {
 		return this.paginateTable(page, limit, 'users', ['name', 'id', 'email']);
 	}
 

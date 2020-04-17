@@ -16,6 +16,8 @@ export default class RootRouter {
 	public get routes(): ExpressRouter {
 		this.router.get('/', this.productController.getAll());
 		this.router.get('/:id', this.validationMiddleware.paramIsNumber(['id']), this.productController.getById());
+		this.router.get('/:page/:limit', this.productController.pagination());
+
 		return this.router;
 	}
 }

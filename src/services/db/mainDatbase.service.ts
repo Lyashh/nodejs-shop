@@ -21,14 +21,23 @@ export default abstract class MainDatabaseService {
 		return this.connection;
 	}
 
-	private getMaxPage(infoRows, limit: number): number {
-		let maxPage = Math.trunc(infoRows.rows[0].count / Number(limit));
-		return maxPage === 0 ? ++maxPage
-			: Number.isInteger(Number(maxPage)) ? maxPage : ++maxPage;
+	private getMaxPage(rows: number, limit: number): number {
+		console.log({rows});
+		console.log({limit});
+		
+		
+		let maxPage = Math.ceil(rows / Number(limit));	
+		console.log({maxPage});
+			
+		 if(maxPage === 0) {
+			return maxPage
+		} else {
+			return maxPage
+		}
 	}
 
-	private countRows(table: string): Promise<number> {
-		return this.knex.raw(`SELECT count(*) FROM ${table}`).then((rows) => rows).catch((err) => err);
+	private async countRows(table: string): Promise<any> {
+		return this.knex('users').count().then((rows) => rows[0].count).catch((err) => err);
 	}
 
 	public async paginateTable(page: number, limit: number, table: string, fields: Array<string>):
@@ -37,9 +46,16 @@ export default abstract class MainDatabaseService {
 		let offset;
 		page === 1 ? offset = 0 : offset = (page - 1) * limit;
 		// count rows
+		console.log({table});
+		
 		const rows = await this.countRows(table);
+		console.log({rows});
+		
 		// get max page
 		const maxPage = this.getMaxPage(rows, Number(limit));
+		console.log({maxPage});
+		
+		
 		return this.knex(table)
 			.select(...fields)
 			// .from(table)

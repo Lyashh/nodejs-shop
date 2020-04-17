@@ -19,4 +19,8 @@ export default class ProductService extends MainDatabaseService {
 			.then((user) => user)
 			.catch((err) => err);
 	}
+
+	public paginate(page: number, limit: number) {
+		return this.paginateTable(page, limit, 'products', ['*']);
+	}
 }
