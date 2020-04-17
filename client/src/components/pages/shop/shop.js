@@ -3,21 +3,32 @@ import React from 'react';
 import Filter from './filter'
 import FilterRow from './filterRow'
 import Header from './header'
+import Items from './items'
 
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'react-bootstrap'
 import Sticky from 'react-stickynode';
+import { withRouter } from "react-router-dom"
+
 
 class Shop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             width: 0,
+            page: 1
         };
+
+
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentDidMount() {
+        if (this.props.match.params.page) {
+            this.setState({ page: this.props.match.params.page })
+        } else {
+            this.setState({ page: 1 })
+        }
         this.props.setPage('shop')
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
@@ -29,6 +40,10 @@ class Shop extends React.Component {
 
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth });
+    }
+
+    setPosition(position) {
+        this.setState({ position })
     }
 
     render() {
@@ -45,7 +60,9 @@ class Shop extends React.Component {
                                 <Filter />
                             </Sticky>
                         </Col>
-                        <Col md={9} className="p-50" style={{ height: '1200px', marginTop: '100px' }}>
+                        <Col md={9} className="p-70">
+                            <Items position={this.props.position} />
+                            {this.state.page}
                         </Col>
                     </Row>
                 </Container>
@@ -55,9 +72,11 @@ class Shop extends React.Component {
 }
 
 export default
-    connect(
-        state => ({}),
+    withRouter(connect(
+        state => ({
+            position: state.itemsFilter.position
+        }),
         dispatch => ({
-            setPage: (page) => { dispatch({ type: 'SET_PAGE', payload: page }) }
+            setPage: (page) => { dispatch({ type: 'SET_PAGE', payload: page }) },
         })
-    )(Shop)
+    )(Shop))

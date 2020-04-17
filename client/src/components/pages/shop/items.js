@@ -8,8 +8,12 @@ class Items extends React.Component {
 
 
     render() {
+        const row = 'row'
+        const tile= 'tile'
         return (
-           <div></div>
+           <div>
+               {this.props.position == 'row' ? row : tile}
+           </div>
         );
     }
 }

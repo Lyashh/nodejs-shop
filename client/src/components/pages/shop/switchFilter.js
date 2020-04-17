@@ -1,15 +1,23 @@
 import React from 'react';
 import Switch from "react-switch";
+import { connect } from 'react-redux'
+
 
 class SwitchFilter extends React.Component {
-    constructor() {
-        super();
-        this.state = { checked: false };
+    constructor(props) {
+        super(props);        
+        this.state = { checked: this.props.position == 'tile' ? true : false };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(checked) {
         this.setState({ checked });
+        if(checked) {
+            this.props.setPosition('tile')
+        } else {
+            this.props.setPosition('row')
+        }
+        
     }
     render() {
         return (
@@ -39,4 +47,13 @@ class SwitchFilter extends React.Component {
     }
 }
 
-export default SwitchFilter
+export default
+	connect(
+		state => ({
+            position: state.itemsFilter.position
+        }),
+		dispatch => ({
+			setPosition: (position) => { dispatch({ type: 'SET_POSITION', payload: position }) }
+		})
+	)(SwitchFilter)
+

@@ -51,15 +51,15 @@ class Filter extends React.Component {
                 {this.state.width > 991 ?  <p className="filter_title">Items Per Page</p> : null}
                
                   <Nav.Link className="filter_link">
-                    <NavDropdown title="20" id="basic-nav-dropdown" className="filter_dropdown items_quan_filter">
+                    <NavDropdown title="12" id="basic-nav-dropdown" className="filter_dropdown items_quan_filter">
                     <NavDropdown.Item >
-                        20
+                        12
                     </NavDropdown.Item>
                     <NavDropdown.Item >
-                        40
+                        24
                     </NavDropdown.Item>
                     <NavDropdown.Item >
-                        60
+                        48
                     </NavDropdown.Item>
                     </NavDropdown>
                 </Nav.Link>

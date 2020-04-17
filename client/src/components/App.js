@@ -21,6 +21,7 @@ class App extends React.Component {
 						<Switch>
 							<Route path="/" exact render={props => <Home {...props} />} />
 							<Route path="/shop" exact render={props => <Shop {...props} />} />
+							<Route path="/shop/:page/" exact render={props => <Shop {...props} />} />
 							<Route path="*" exact render={props => <NotFound {...props} />} />
 						</Switch>
 					</Router>
