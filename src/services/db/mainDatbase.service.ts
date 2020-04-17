@@ -5,6 +5,7 @@ export interface PaginationData {
 	items?: Array<object>;
 	maxPage: number;
 	currentPage?: number;
+	rows?: number
 }
 
 export default abstract class MainDatabaseService {
@@ -49,12 +50,9 @@ export default abstract class MainDatabaseService {
 		console.log({table});
 		
 		const rows = await this.countRows(table);
-		console.log({rows});
 		
 		// get max page
-		const maxPage = this.getMaxPage(rows, Number(limit));
-		console.log({maxPage});
-		
+		const maxPage = this.getMaxPage(rows, Number(limit));		
 		
 		return this.knex(table)
 			.select(...fields)
@@ -62,7 +60,7 @@ export default abstract class MainDatabaseService {
 			.limit(limit).offset(offset)
 			.then((items) => {
 				if (items.length) {
-					return { items, maxPage, currentPage: page };
+					return { items, maxPage, currentPage: page, rows};
 				}
 				return { maxPage };
 			})

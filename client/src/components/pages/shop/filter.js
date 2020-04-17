@@ -48,7 +48,7 @@ class Filter extends React.Component {
         })
 
         return (
-                    <header  className="p-70">
+                    <header  className="p-100">
                         <div className="filter_component">
                             <p className="filter_text">CATEGORIES</p>
                             {category}

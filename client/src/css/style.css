@@ -350,7 +350,7 @@ div .main_button {
 /*FILTER NAVBAR LG */
 @media (min-width: 991px) {
   .filter_navbar {
-    background-color: #fff;
+    background-color: #FCF9F3;
     border-bottom: 1px solid #ccc;
     padding-top: 0px!important;
     padding-bottom: 0px!important;
@@ -459,4 +459,46 @@ div .main_button {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+/*ITEM TILE*/
+.items-row {
+  padding-left: 30px;
+}
+
+.tile-item {
+  height: 500px;
+}
+
+.tile-item-img {
+  width: 100%;
+  height: auto;
+}
+
+
+/* PAGINATION */
+
+.pagination-wrap {
+  position: relative;
+  text-align: center;
+  min-height: 50px;
+  color: #1B333D;
+}
+
+.pagin-link {
+  color: #1B333D;
+  padding: 0 16px;
+  margin: 0 12px 6px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 38px;
+  border: 2px solid #1B333D;
+  line-height: 34px;
+  letter-spacing: .03em;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 250ms;
+  font-weight: 700;
 }

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap'
 import SwitchFilter from './switchFilter'
+import { connect } from 'react-redux'
+
 
 class Filter extends React.Component {
     constructor(props) {
         super(props);
         this.state = { width: 0 };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.handleQuantity = this.handleQuantity.bind(this)
     }
 
     componentDidMount() {
@@ -20,6 +23,10 @@ class Filter extends React.Component {
 
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth });
+    }
+
+    handleQuantity(e) {    
+        this.props.setQuantity(e.target.getAttribute('value'))    
     }
 
     render() {
@@ -51,14 +58,14 @@ class Filter extends React.Component {
                 {this.state.width > 991 ?  <p className="filter_title">Items Per Page</p> : null}
                
                   <Nav.Link className="filter_link">
-                    <NavDropdown title="12" id="basic-nav-dropdown" className="filter_dropdown items_quan_filter">
-                    <NavDropdown.Item >
+                    <NavDropdown title={this.props.quantity} id="basic-nav-dropdown" className="filter_dropdown items_quan_filter">
+                    <NavDropdown.Item value={12} onClick={this.handleQuantity}>
                         12
                     </NavDropdown.Item>
-                    <NavDropdown.Item >
+                    <NavDropdown.Item value={24} onClick={this.handleQuantity}>
                         24
                     </NavDropdown.Item>
-                    <NavDropdown.Item >
+                    <NavDropdown.Item value={48} onClick={this.handleQuantity}>
                         48
                     </NavDropdown.Item>
                     </NavDropdown>
@@ -79,5 +86,13 @@ class Filter extends React.Component {
     }
 }
 
-export default Filter
+export default
+    connect(
+        state => ({
+            quantity: state.itemsFilter.quantity
+        }),
+        dispatch => ({
+            setQuantity: (quantity) => { dispatch({ type: 'SET_QUANTITY_ITEMS', payload: quantity }) },
+        })
+    )(Filter)
 

@@ -21,11 +21,10 @@ export default class ProductControoller {
 				.then(async (page) => {
 					if (page.items) {
 						return res.json({
-							data: {
-								users: page.items,
+								items: page.items,
 								maxPage: page.maxPage,
 								currentPage: page.currentPage,
-							},
+								rows: page.rows
 						});
 					}
 					res.status(404).json({ message: `Page ${req.params.page} does not exist`, maxPage: page.maxPage });

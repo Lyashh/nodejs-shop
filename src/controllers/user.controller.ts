@@ -23,12 +23,15 @@ export default class UserControoller {
 		return (req: Request, res: Response): Promise<any> => {
 			return this.userService.paginate(Number(req.params.page), Number(req.params.limit))
 				.then(async (page) => {
+					console.log(page);
+					
 					if (page.items) {
 						return res.json({
 							data: {
-								users: page.items,
+								items: page.items,
 								maxPage: page.maxPage,
 								currentPage: page.currentPage,
+								rows: page.rows
 							},
 						});
 					}
