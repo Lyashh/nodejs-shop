@@ -2,8 +2,6 @@ import knex from 'knex';
 import doenv from 'dotenv';
 // add env
 doenv.config();
-console.log(process.env.PG_URL);
-
 
 const database = {
 	client: 'postgresql',
