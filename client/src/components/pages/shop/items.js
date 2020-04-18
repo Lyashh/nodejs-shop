@@ -13,6 +13,8 @@ class Items extends React.Component {
             return (
                 <Col md={4} className="tile-item">
                     <img src={`http://localhost:8081/${el.photo_url}`} className="tile-item-img" />
+                    <button>ADD TO CART</button>
+                    <h2>{el.title}</h2>
                 </Col>)
         })
 

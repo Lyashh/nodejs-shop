@@ -5,6 +5,7 @@ import FilterRow from './filterRow'
 import Header from './header'
 import Items from './items'
 import PaginationCompoment from '../../elements/pagination'
+import Preloader from '../../elements/preloader'
 
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'react-bootstrap'
@@ -19,30 +20,32 @@ class Shop extends React.Component {
         super(props);
         this.state = {
             width: 0,
-            items: []
+            items: [],
+            preloader: true
         };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentDidMount() {
+        this.switchPreloader()
         if (this.props.match.params.page) {
             this.props.setItemPage(this.props.match.params.page)
-            this.getItems()
         } else {
-            this.props.setItemPage(1)
-            this.getItems()
+            this.props.history.push('/shop/1');
         }
         this.props.setPage('shop')
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
+        //this.getItems()
     }
-
 
     getItems() {
         Pagination(this.props.itemPage, this.props.quantity)
             .then(res => {
                 if (res.status == 200) {
-                    this.setState({ items: res.data.items })
+                    console.log(this.props.itemPage)
+                    this.setState({ items: res.data.items });
+                    this.props.setMaxItemPage(res.data.maxPage);
                 }
             })
             .catch(err => console.log(err))
@@ -53,7 +56,14 @@ class Shop extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.quantity != this.props.quantity || prevProps.itemPage != this.props.itemPage) {
+        if (prevProps.quantity != this.props.quantity) {
+            this.switchPreloader()
+            this.props.history.push('/shop/1');
+            this.props.setItemPage(this.props.match.params.page)
+            this.getItems()
+        } else if (prevProps.itemPage != this.props.itemPage || this.props.match.params.page != prevProps.match.params.page) {
+            this.switchPreloader()
+            this.props.setItemPage(this.props.match.params.page)
             this.getItems()
         }
     }
@@ -66,7 +76,21 @@ class Shop extends React.Component {
         this.setState({ position })
     }
 
+    switchPreloader() {
+        this.setState({ preloader: true })
+        setTimeout(() => {
+            this.setState({ preloader: false })
+        }, 1500);
+    }
+
     render() {
+        let content = this.state.preloader ?
+            <Preloader /> :
+            (<div>
+                <Items position={this.props.position} items={this.state.items} />
+                <PaginationCompoment maxPage={this.props.maxPage} currentPage={this.props.itemPage} />
+            </div>)
+
         return (
             <div>
                 <Header />
@@ -81,10 +105,7 @@ class Shop extends React.Component {
                             </Sticky>
                         </Col>
                         <Col md={9} className="p-70">
-                            grgrgr
-                            <PaginationCompoment />
-                            <Items position={this.props.position} items={this.state.items} />
-                          
+                            {content}
                         </Col>
                     </Row>
                 </Container>
@@ -96,6 +117,7 @@ class Shop extends React.Component {
 export default
     withRouter(connect(
         state => ({
+            maxPage: state.itemsFilter.maxPage,
             position: state.itemsFilter.position,
             quantity: state.itemsFilter.quantity,
             itemPage: state.itemsFilter.page
@@ -103,5 +125,6 @@ export default
         dispatch => ({
             setPage: (page) => { dispatch({ type: 'SET_PAGE', payload: page }) },
             setItemPage: (page) => { dispatch({ type: 'SET_ITEM_PAGE', payload: page }) },
+            setMaxItemPage: (page) => { dispatch({ type: 'SET_MAX_ITEM_PAGE', payload: page }) }
         })
     )(Shop))

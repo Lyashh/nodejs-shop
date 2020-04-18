@@ -26,7 +26,7 @@ class Filter extends React.Component {
     }
 
     handleQuantity(e) {    
-        this.props.setQuantity(e.target.getAttribute('value'))    
+        this.props.setQuantity(Number.parseInt(e.target.getAttribute('value')))    
     }
 
     render() {

@@ -38,7 +38,7 @@ export default abstract class MainDatabaseService {
 	}
 
 	private async countRows(table: string): Promise<any> {
-		return this.knex('users').count().then((rows) => rows[0].count).catch((err) => err);
+		return this.knex(table).count().then((rows) => rows[0].count).catch((err) => err);
 	}
 
 	public async paginateTable(page: number, limit: number, table: string, fields: Array<string>):
