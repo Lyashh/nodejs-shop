@@ -16,9 +16,7 @@ const Passport = auth.getInstance;
 
 class App {
 	private static app: App
-
 	private expressApp: express.Application
-
 	private router: Router
 
 	private constructor() {

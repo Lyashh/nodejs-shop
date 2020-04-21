@@ -10,7 +10,7 @@ export default class ProductControoller {
 	public getAll() {
 		return (req: Request, res: Response): Promise<Response> => {
 			return this.productService.findAll().then((products) => {
-				return res.json({ data: products });
+				return res.json(products);
 			}).catch((err) => res.json({ err }));
 		}
 	}
@@ -23,7 +23,6 @@ export default class ProductControoller {
 						return res.json({
 								items: page.items,
 								maxPage: page.maxPage,
-								currentPage: page.currentPage,
 								rows: page.rows
 						});
 					}
@@ -34,12 +33,19 @@ export default class ProductControoller {
 
 	public getById() {
 		return (req: Request, res: Response): Promise<any> => {
-			return this.productService.findById(parseInt(req.params.id)).then((product) => {
-				if (product) {
-					return res.json({ data: product });
+			return this.productService.findById(parseInt(req.params.id)).then((product) => {				
+				if (product.name != 'error') {
+					return res.json(product);
+				} if(product.name == 'error') {
+					return res.status(500).json(product)
 				}
 				return res.status(404).json({ message: `Product with id: '${req.params.id}' does not exist` });
-			}).catch((err) => res.json({ err }));
+			}).catch((err) => {
+				if(Object.keys(err).length === 0) {
+					return res.status(404).json({ message: `Product with id: '${req.params.id}' does not exist` });
+				}
+				return res.json({ err })
+			});
 		}
 	}
 }

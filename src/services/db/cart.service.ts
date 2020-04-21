@@ -9,7 +9,7 @@ export default class CartService extends MainDatabaseService {
 		return this.getAll('cart', ['*']);
 	}
 
-	public async addOrUpdateAuth(item): Promise<any> {
+	public async addOrUpdateByAuth(item): Promise<any> {
 		const cartQuery = this.knex('cart').select('*')
 			.where('user_id', item.user_id).andWhere('product_id', item.product_id);
 		return cartQuery.then((cart: Array<any>) => {

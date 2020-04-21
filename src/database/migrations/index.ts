@@ -40,6 +40,7 @@ export async function up(knex: Knex): Promise<any> {
 			table.string('email').unique().notNullable();
 			table.string('password');
 			table.string('name');
+			
 			table.timestamp('created_at').defaultTo(knex.fn.now());
 			table.timestamp('updated_at').defaultTo(knex.fn.now());
 		})
@@ -56,22 +57,21 @@ export async function up(knex: Knex): Promise<any> {
 		.createTable('cart', (table) => {
 			table.increments('id').primary();
 			table.integer('quantity').notNullable();
-			table.timestamp('created_at').defaultTo(knex.fn.now());
-			table.timestamp('updated_at').defaultTo(knex.fn.now());
 			table.bigInteger('user_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
 			table.bigInteger('product_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
+
+			table.timestamp('created_at').defaultTo(knex.fn.now());
+			table.timestamp('updated_at').defaultTo(knex.fn.now());
 		})
 		.createTable('order', (table) => {
 			table.increments();
-			table.float('sum').notNullable();
-			table.boolean('paid').notNullable();
-			table.specificType('intarray', 'integer ARRAY').notNullable();
 			table.bigInteger('user_id').unsigned().notNullable()
 				.references('id').inTable('category').onDelete('CASCADE').index();
-			table.bigInteger('status_id').unsigned().notNullable()
-				.references('id').inTable('status').onDelete('CASCADE').index();
+			table.bigInteger('cart_id').unsigned().notNullable()
+				.references('id').inTable('category').onDelete('CASCADE').index();
+
 			table.timestamp('created_at').defaultTo(knex.fn.now());
 			table.timestamp('updated_at').defaultTo(knex.fn.now());
 		});

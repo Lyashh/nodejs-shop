@@ -49,6 +49,6 @@ export default class AuthControoller {
 	}
 
 	public profile(req: Request, res: Response) {
-		return res.json({ message: 'success', detail: 'login', user: req.session!.passport.user });
+		return res.json({user: req.session!.passport.user });
 	}
 }

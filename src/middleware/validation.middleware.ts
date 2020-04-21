@@ -11,7 +11,7 @@ export default class ValidationMiddleware {
 			const validResult = await Validation.userValidation(req.body.user);
 			if (validResult.error) {
 				return res.status(422).json({
-					error: validResult.error.details[0],
+					detail: validResult.error.details[0],
 					message: 'validation fails',
 				});
 			}
@@ -33,7 +33,7 @@ export default class ValidationMiddleware {
 			return next();
 		} else {
 			return res.status(422).json({
-				error: 'Request dont have any of this fields "password", "email"',
+				detail: 'Request dont have any of this fields "password", "email"',
 				message: 'validation fails',
 			});
 		}

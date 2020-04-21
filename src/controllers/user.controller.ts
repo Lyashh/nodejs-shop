@@ -13,7 +13,7 @@ export default class UserControoller {
 				if (data.errno || data.name === 'error') {
 					return res.json({ error: data });
 				}
-				return res.json({ data });
+				return res.json(data);
 			}).catch((err) => res.json({ err }));
 		}
 	}
@@ -27,12 +27,9 @@ export default class UserControoller {
 					
 					if (page.items) {
 						return res.json({
-							data: {
 								items: page.items,
 								maxPage: page.maxPage,
-								currentPage: page.currentPage,
 								rows: page.rows
-							},
 						});
 					}
 					res.status(404).json({ message: `Page ${req.params.page} does not exist`, maxPage: page.maxPage });

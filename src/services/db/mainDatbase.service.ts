@@ -23,13 +23,7 @@ export default abstract class MainDatabaseService {
 	}
 
 	private getMaxPage(rows: number, limit: number): number {
-		console.log({rows});
-		console.log({limit});
-		
-		
-		let maxPage = Math.ceil(rows / Number(limit));	
-		console.log({maxPage});
-			
+		let maxPage = Math.ceil(rows / Number(limit));				
 		 if(maxPage === 0) {
 			return maxPage
 		} else {

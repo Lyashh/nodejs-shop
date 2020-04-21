@@ -11,7 +11,6 @@ doenv.config();
 
 export default class Auth {
 	private static instance: Auth
-	private _localErrror: string
 	public _GoogleStrategy: GoogleStrategy
 	public _LocalStrategy: LocalStrategy
 	public _passport
@@ -19,12 +18,11 @@ export default class Auth {
 
 	private constructor() {
 		this.userService = new UserService();
-		this._localErrror = ''
 		this._passport = passport
 		this._GoogleStrategy = new GoogleStrategy({
 			clientSecret: process.env.CLIENT_SECRET as string,
 			clientID: process.env.CLIENT_ID as string,
-			callbackURL: '/auth/google/callback',
+			callbackURL: 'api/v1/auth/google/callback',
 			passReqToCallback: true,
 		}, this.googleVerifyHandler)
 
@@ -77,7 +75,6 @@ export default class Auth {
 								role_id: user.role_id,
 							});
 					} else {
-						console.log('wrong password');
 						req.session.loginError = { message: 'Wrong password', status: 422 };
 						return done(null, false, { message: req.session.loginError.message });
 					}
@@ -112,8 +109,7 @@ export default class Auth {
 
 	public get localMiddleware() {
 		return this._passport.authenticate('local', {
-			failureRedirect: "/auth/login/callback",
-			//failureMessage: "Invalid username or password"
+			failureRedirect: "/api/v1/auth/login/callback",
 		})
 	}
 
