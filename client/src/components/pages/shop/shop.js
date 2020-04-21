@@ -7,6 +7,7 @@ import Items from './items'
 import PaginationCompoment from '../../elements/pagination'
 import Preloader from '../../elements/preloader'
 
+import Fade from 'react-reveal/Fade';
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'react-bootstrap'
 import Sticky from 'react-stickynode';
@@ -21,7 +22,7 @@ class Shop extends React.Component {
         this.state = {
             width: 0,
             items: [],
-            preloader: true
+            preloader: true,
         };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
@@ -80,16 +81,19 @@ class Shop extends React.Component {
         this.setState({ preloader: true })
         setTimeout(() => {
             this.setState({ preloader: false })
-        }, 1500);
+        }, 1000);
+
     }
 
     render() {
         let content = this.state.preloader ?
             <Preloader /> :
             (<div>
-                <Items position={this.props.position} items={this.state.items} />
+                <Items position={this.props.position} items={this.state.items} preloader={this.switchPreloader.bind(this)}/>
                 <PaginationCompoment maxPage={this.props.maxPage} currentPage={this.props.itemPage} />
-            </div>)
+            </div>
+
+            )
 
         return (
             <div>
@@ -105,6 +109,7 @@ class Shop extends React.Component {
                             </Sticky>
                         </Col>
                         <Col md={9} className="p-70">
+
                             {content}
                         </Col>
                     </Row>

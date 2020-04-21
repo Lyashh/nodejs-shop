@@ -1,8 +1,9 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap'
-import Navbar from '../../elements/navbar'
 import { connect } from 'react-redux'
-//style={{height: `${window.screen.height-200}px`}}
+
+import Navbar from '../../elements/navbar'
+
 class Home extends React.Component {
 	componentDidMount() {
 		this.props.setPage('home')
