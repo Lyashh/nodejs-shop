@@ -40,17 +40,18 @@ export default class ValidationMiddleware {
 	}
 
 	public cartValidation() {
-		return async (req: CartRequest, res: Response, next: NextFunction) => {
-			if (req.body.data) {
-				const validResult = await Validation.cartValidation(req.body.data);
+		return async (req: CartRequest, res: Response, next: NextFunction) => {			
+			if (req.body.item) {
+				const validResult = await Validation.cartValidation(req.body.item);
 				if (validResult.error) {
 					return res.status(422).json({ error: validResult.error.details[0] });
 				} else {
-					req.cart = validResult.value;
 					return next();
 				}
+			} else {
+				return res.status(422).json({detail: 'Request dont have any of this fields "item"'})
 			}
-			return res.status(422).json({ error: 'Request dont have field "item"', message: 'validation fails' });
+
 		}
 	}
 
@@ -69,6 +70,4 @@ export default class ValidationMiddleware {
 			return result;
 		};
 	}
-
-
 }

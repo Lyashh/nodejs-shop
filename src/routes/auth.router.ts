@@ -29,7 +29,7 @@ export default class UsersRouter {
 		this.router.post('/registration', this.validationMiddleware.registerUserValidation,
 			this.authController.registration);
 		this.router.post('/logout', this.authMiddleware.isAuth, this.authController.logout);
-		this.router.get('/profile', this.authMiddleware.isAuth, this.authController.profile);
+		this.router.get('/profile', /*this.authMiddleware.isAuth*/ this.authController.profile);
 
 		return this.router;
 	}

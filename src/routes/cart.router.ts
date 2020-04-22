@@ -14,6 +14,7 @@ export default class RootRouter {
 
 	public get routes(): ExpressRouter {
 		this.router.post('/', this.validationMiddleware.cartValidation(), this.cartController.addOrUpdate());
+		this.router.get('/byUser/:id', this.cartController.cartByUserId());
 		return this.router;
 	}
 }

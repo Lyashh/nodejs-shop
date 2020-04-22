@@ -9,7 +9,7 @@ export default class CartService extends MainDatabaseService {
 		return this.getAll('cart', ['*']);
 	}
 
-	public async addOrUpdateByAuth(item): Promise<any> {
+	public addOrUpdateByAuth(item): Promise<any> {
 		const cartQuery = this.knex('cart').select('*')
 			.where('user_id', item.user_id).andWhere('product_id', item.product_id);
 		return cartQuery.then((cart: Array<any>) => {
@@ -20,5 +20,9 @@ export default class CartService extends MainDatabaseService {
 			}
 		})
 			.catch((err) => err);
+	}
+
+	public cartByUserId(id: number): Promise<any> {
+		return this.knex('cart').select('*').where('user_id', id).then(res => res).catch(err => err)
 	}
 }

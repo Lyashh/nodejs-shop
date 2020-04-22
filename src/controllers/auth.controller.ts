@@ -2,12 +2,15 @@ import { Response, Request, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import Validation from '../services/validation/joi';
 import UserService from '../services/db/user.service';
+import CartService from '../services/db/cart.service';
 
 export default class AuthControoller {
-	private userService: UserService
+	private userService: UserService;
+	private cartService: CartService;
 
 	constructor() {
-		this.userService = new UserService()
+		this.userService = new UserService();
+		this.cartService = new CartService();
 	}
 
 	public googleCallback(req: Request, res: Response): Response {
@@ -48,7 +51,9 @@ export default class AuthControoller {
 			.json({ message: 'login error', detail: req.session!.loginError.message || 'Invalid username or password' });
 	}
 
-	public profile(req: Request, res: Response) {
-		return res.json({user: req.session!.passport.user });
+	public profile = (req: Request, res: Response) => {
+		return this.cartService.cartByUserId(req.session!.passport.user.id).then(cart => {
+			return res.json({ user: req.session!.passport.user, cart });
+		})
 	}
 }
