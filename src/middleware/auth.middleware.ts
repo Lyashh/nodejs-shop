@@ -22,4 +22,29 @@ export default class AuthMiddleware {
 			});
 		}
 	}
+
+	public setSessionItems() {
+		return (req: Request, res: Response, next: NextFunction) => {
+			if(!req.session!.orders || !req.session!.cart) {
+				req.session!.orders = [];
+				req.session!.cart = [];
+				return next()
+			}
+			return next()
+		}
+	}
+
+	sessionToDb() {
+		return async (req: Request, res: Response, next: NextFunction) => {
+			if(req.session!.cart.length > 0) {
+				console.log('add items to cart');
+				req.session!.cart = [];
+			}
+			if(req.session!.orders.length > 0) {
+				console.log('add items to order');
+				req.session!.orders = [];
+			}
+			next()
+		}
+	}
 }

@@ -58,9 +58,9 @@ export async function up(knex: Knex): Promise<any> {
 			table.increments('id').primary();
 			table.integer('quantity').notNullable();
 			table.bigInteger('user_id').unsigned().notNullable()
-				.references('id').inTable('category').onDelete('CASCADE').index();
+				.references('id').inTable('users').onDelete('CASCADE').index();
 			table.bigInteger('product_id').unsigned().notNullable()
-				.references('id').inTable('category').onDelete('CASCADE').index();
+				.references('id').inTable('products').onDelete('CASCADE').index();
 
 			table.timestamp('created_at').defaultTo(knex.fn.now());
 			table.timestamp('updated_at').defaultTo(knex.fn.now());
@@ -68,9 +68,9 @@ export async function up(knex: Knex): Promise<any> {
 		.createTable('order', (table) => {
 			table.increments();
 			table.bigInteger('user_id').unsigned().notNullable()
-				.references('id').inTable('category').onDelete('CASCADE').index();
+				.references('id').inTable('users').onDelete('CASCADE').index();
 			table.bigInteger('cart_id').unsigned().notNullable()
-				.references('id').inTable('category').onDelete('CASCADE').index();
+				.references('id').inTable('cart').onDelete('CASCADE').index();
 
 			table.timestamp('created_at').defaultTo(knex.fn.now());
 			table.timestamp('updated_at').defaultTo(knex.fn.now());

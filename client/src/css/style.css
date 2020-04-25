@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap");
 
 html,
 body {
   height: 100%;
   margin: 0px;
   padding: 0px;
+}
+
+.op-0 {
+  display: none;
 }
 
 a {
@@ -465,15 +469,57 @@ div .main_button {
   padding-left: 30px;
 }
 
+.row-btn-item {
+  float: left;
+  width: 130px;
+  height: 44px;
+  background-color: #fff;
+  border: 1.5px solid #224229!important; 
+  border: none;
+  color: #224229;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  border-radius: 100px;
+}
+
+.row-item-price span{
+  float:right;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 23px
+}
+
+.row-item-detail h4 {
+  color: #304936; 
+  font-weight: 500;
+  font-size: 19px;
+  font-style: italic;
+}
+
+
 .tile-item {
+  text-align: center;
   height: auto;
-  padding-left: 20px!important;
-  padding-right: 20px!important;
-} 
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-bottom: 90px;
+}
+
+.tile-item-price, .row-item-price {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.row-item-price {
+  margin-top: 30px;
+}
 
 .tile-item-img {
+  padding: 20px;
   width: 100%;
   height: auto;
+  border-radius: 300px;
 }
 
 .item-wrap {
@@ -492,25 +538,65 @@ div .main_button {
 }
 
 .tile-item button {
-  width: 100%;
-  height: 60px;
-  background-color: #224229;
+  width: 175px;
+  height: 50px;
+  background-color: #fff;
+  border: 1.5px solid #224229!important; 
   border: none;
-  color: #fff;
+  color: #224229;
   font-size: 17px;
-  font-weight: 400;
+  font-weight: 500;
   font-family: "Roboto", sans-serif;
+  border-radius: 100px;
 }
 
 .tile-item h2 {
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 24px;
   font-size: 21px;
   font-weight: 400;
   text-align: center;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
+}
+
+.fixed-h-40 {
+  height: 40px;
+}
+
+.bg-pink {
+  background-color: #FFDBC3;
+  padding: 4px 13px 4px 13px;
+}
+
+/* ROW ITEM */
+
+.row-item {
+  height: 400px;
+  margin-bottom: 30px;
+  padding-right: 35px !important;
+  padding-left: 35px !important;
+}
+
+.row-item-detail {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding-left: 40px !important;
+ 
+}
+
+.row-item-detail p {
+  text-align: justify;
+}
+
+.row-item-img {
+  position: relative;
+  height: auto;
+  width: 100%;
+  border-radius: 400px;
 }
 
 /* PAGINATION */
@@ -577,5 +663,3 @@ div .main_button {
   opacity: 0;
   transition: opacity 200ms;
 }
-
-

@@ -3,6 +3,7 @@ import ProductService from '../services/db/product.service';
 
 export default class ProductControoller {
 	public productService: ProductService
+	
 	constructor() {
 		this.productService = new ProductService();
 	}

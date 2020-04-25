@@ -51,9 +51,13 @@ export default class AuthControoller {
 			.json({ message: 'login error', detail: req.session!.loginError.message || 'Invalid username or password' });
 	}
 
-	public profile = (req: Request, res: Response) => {
+	public profileAuth = (req: Request, res: Response) => {
 		return this.cartService.cartByUserId(req.session!.passport.user.id).then(cart => {
 			return res.json({ user: req.session!.passport.user, cart });
 		})
+	}
+
+	public profileNotAuth = (req: Request, res: Response) => {
+		return res.json({ cart: req.session!.cart, orders: req.session!.orders})
 	}
 }

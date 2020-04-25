@@ -51,7 +51,6 @@ export default class ValidationMiddleware {
 			} else {
 				return res.status(422).json({detail: 'Request dont have any of this fields "item"'})
 			}
-
 		}
 	}
 

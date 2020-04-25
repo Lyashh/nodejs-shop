@@ -24,13 +24,14 @@ export default class UsersRouter {
 		this.router.post('/login', this.authMiddleware.notAuth,
 			this.validationMiddleware.loginValidation,
 			passport.localMiddleware,
-			this.authController.profile);
+			this.authMiddleware.sessionToDb(),
+			this.authController.profileAuth);
 		this.router.get('/login/callback', this.authController.failLogin);
 		this.router.post('/registration', this.validationMiddleware.registerUserValidation,
 			this.authController.registration);
 		this.router.post('/logout', this.authMiddleware.isAuth, this.authController.logout);
-		this.router.get('/profile', /*this.authMiddleware.isAuth*/ this.authController.profile);
-
+		this.router.get('/profile', this.authMiddleware.isAuth, this.authController.profileAuth);
+		this.router.get('/profileNotAuth', this.authMiddleware.notAuth, this.authController.profileNotAuth);
 		return this.router;
 	}
 }

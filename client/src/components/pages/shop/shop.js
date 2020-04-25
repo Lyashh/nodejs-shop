@@ -28,7 +28,7 @@ class Shop extends React.Component {
     }
 
     componentDidMount() {
-        this.switchPreloader()
+        //this.switchPreloader()
         if (this.props.match.params.page) {
             this.props.setItemPage(this.props.match.params.page)
         } else {
@@ -58,12 +58,12 @@ class Shop extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.quantity != this.props.quantity) {
-            this.switchPreloader()
+            //this.switchPreloader()
             this.props.history.push('/shop/1');
             this.props.setItemPage(this.props.match.params.page)
             this.getItems()
         } else if (prevProps.itemPage != this.props.itemPage || this.props.match.params.page != prevProps.match.params.page) {
-            this.switchPreloader()
+            //this.switchPreloader()
             this.props.setItemPage(this.props.match.params.page)
             this.getItems()
         }
@@ -81,18 +81,19 @@ class Shop extends React.Component {
         this.setState({ preloader: true })
         setTimeout(() => {
             this.setState({ preloader: false })
-        }, 1000);
+        }, 900);
 
     }
 
     render() {
-        let content = this.state.preloader ?
-            <Preloader /> :
-            (<div>
-                <Items position={this.props.position} items={this.state.items} preloader={this.switchPreloader.bind(this)}/>
-                <PaginationCompoment maxPage={this.props.maxPage} currentPage={this.props.itemPage} />
+        let content = (
+            <div>
+                {this.state.preloader ? <Preloader /> : null}
+                <div className={this.state.preloader ? "op-0" : ""}>
+                    <Items position={this.props.position} items={this.state.items} preloader={this.switchPreloader.bind(this)} />
+                    <PaginationCompoment maxPage={this.props.maxPage} currentPage={this.props.itemPage} />
+                </div>
             </div>
-
             )
 
         return (

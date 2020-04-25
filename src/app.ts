@@ -8,6 +8,7 @@ import doenv from 'dotenv';
 import DB from './database/connection';
 import Router from './routes/index.router';
 import auth from './services/auth/passport';
+import AuthMiddleware from './middleware/auth.middleware'
 
 doenv.config();
 const logger = log4js.getLogger();
@@ -18,8 +19,10 @@ class App {
 	private static app: App
 	private expressApp: express.Application
 	private router: Router
+	private authMiddleware: AuthMiddleware;
 
 	private constructor() {
+		this.authMiddleware = new AuthMiddleware();
 		this.expressApp = express();
 		this.router = new Router();
 		this.config();
@@ -50,7 +53,7 @@ class App {
 		this.expressApp.use(Passport._passport.session());
 
 		this.expressApp.set('port', process.env.PORT || 3000)
-		this.expressApp.use(`/api/${process.env.API_VERSION}/`, this.router.routes);
+		this.expressApp.use(`/api/${process.env.API_VERSION}/`, this.authMiddleware.setSessionItems(), this.router.routes);
 		this.expressApp.use((req, res, next) => {
 			res.status(404);
 			return res.json({ error: `Not found${req.originalUrl}` });
