@@ -25,4 +25,11 @@ export default class CartService extends MainDatabaseService {
 	public cartByUserId(id: number): Promise<any> {
 		return this.knex('cart').select('*').where('user_id', id).then(res => res).catch(err => err)
 	}
+	
+	public  addArray = async(data: Array<{product_id: number; quantity: number, user_id: number}>) => {
+		const result = await Promise.all(data.map(el => {
+			return this.addOrUpdateByAuth(el)
+		}))
+		return result
+	}
 }

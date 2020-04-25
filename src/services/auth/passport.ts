@@ -72,7 +72,6 @@ export default class Auth {
 								id: user.id,
 								email: user.email,
 								name: user.name,
-								role_id: user.role_id,
 							});
 					} else {
 						req.session.loginError = { message: 'Wrong password', status: 422 };

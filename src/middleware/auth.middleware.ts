@@ -1,6 +1,16 @@
 import { Response, Request, NextFunction } from 'express';
+import CartService from '../services/db/cart.service'
+import log4js from 'log4js';
+
+const logger = log4js.getLogger();
 
 export default class AuthMiddleware {
+	public cartService: CartService
+
+	constructor() {
+		this.cartService = new CartService();
+	}
+
 	public isAuth(req: Request, res: Response, next: NextFunction): void | Response {
 		if (req.isAuthenticated()) {
 			return next();
@@ -25,7 +35,7 @@ export default class AuthMiddleware {
 
 	public setSessionItems() {
 		return (req: Request, res: Response, next: NextFunction) => {
-			if(!req.session!.orders || !req.session!.cart) {
+			if (!req.session!.orders || !req.session!.cart) {
 				req.session!.orders = [];
 				req.session!.cart = [];
 				return next()
@@ -36,11 +46,21 @@ export default class AuthMiddleware {
 
 	sessionToDb() {
 		return async (req: Request, res: Response, next: NextFunction) => {
-			if(req.session!.cart.length > 0) {
-				console.log('add items to cart');
+			if (req.session!.cart.length > 0) {
+				const result = await this.cartService.addArray(req.session!.cart.map(el => {
+					el.user_id = req.session!.passport.user.id;
+					return el;
+				}))
+				const check = result.every(el => {
+					return el[0].id;
+				})
+				if (!check) {
+					logger.error('Save cart from from session to DB error');
+					logger.error({carts: result});
+				}
 				req.session!.cart = [];
 			}
-			if(req.session!.orders.length > 0) {
+			if (req.session!.orders.length > 0) {
 				console.log('add items to order');
 				req.session!.orders = [];
 			}
