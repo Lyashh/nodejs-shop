@@ -4,6 +4,7 @@ import UserRouter from './users.router';
 import AuthRouter from './auth.router';
 import ProductRouter from './product.router';
 import CartRouter from './cart.router';
+import OrderRouter from './order.router'
 
 export default class Router {
 	private router: ExpressRouter
@@ -12,9 +13,11 @@ export default class Router {
 	private authRouter: AuthRouter
 	private productRouter: ProductRouter
 	private cartRouter: CartRouter
+	private orderRouter: OrderRouter
 
 	constructor() {
 		this.router = ExpressRouter();
+		this.orderRouter = new OrderRouter();
 		this.userRouter = new UserRouter();
 		this.rootRouter = new RootRouter();
 		this.authRouter = new AuthRouter();
@@ -28,6 +31,7 @@ export default class Router {
 		this.router.use('/auth', this.authRouter.routes);
 		this.router.use('/products', this.productRouter.routes);
 		this.router.use('/cart', this.cartRouter.routes);
+		this.router.use('/order', this.orderRouter.routes)
 		return this.router;
 	}
 }

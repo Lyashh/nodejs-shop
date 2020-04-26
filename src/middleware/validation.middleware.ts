@@ -17,7 +17,7 @@ export default class ValidationMiddleware {
 			}
 			return next();
 		} else {
-			return res.status(422).json({ error: 'Request dont have field "user"', message: 'validation fails' });
+			return res.status(422).json({ detail: 'Request dont have field "user"', message: 'validation fails' });
 		}
 	}
 
@@ -28,7 +28,7 @@ export default class ValidationMiddleware {
 				password: req.body.password,
 			});
 			if (validResult.error) {
-				return res.status(422).json({ error: validResult.error.details[0] });
+				return res.status(422).json({ detail: validResult.error.details[0] });
 			}
 			return next();
 		} else {
@@ -44,7 +44,7 @@ export default class ValidationMiddleware {
 			if (req.body.item) {
 				const validResult = await Validation.cartValidation(req.body.item);
 				if (validResult.error) {
-					return res.status(422).json({ error: validResult.error.details[0] });
+					return res.status(422).json({ detail: validResult.error.details[0] });
 				} else {
 					return next();
 				}
@@ -65,7 +65,7 @@ export default class ValidationMiddleware {
 					return 0;
 				}
 			});
-			const result = validation ? next() : res.status(422).json({ error: `Propery "${errorParam}" must be number` });
+			const result = validation ? next() : res.status(422).json({ detail: `Propery "${errorParam}" must be number` });
 			return result;
 		};
 	}

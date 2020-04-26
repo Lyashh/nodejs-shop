@@ -60,4 +60,15 @@ export default class Joi {
 		});
 		return schema.validate(item);
 	}
+
+	public static orderValidation(item) {
+		const services = joi.object({
+			product_id: joi.number()
+				.integer()
+				.required()
+		});
+
+		const schema = joi.array().items(services).min(1)
+		return schema.validate(item);
+	}
 }
