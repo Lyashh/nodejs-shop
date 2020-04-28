@@ -61,14 +61,20 @@ export default class Joi {
 		return schema.validate(item);
 	}
 
-	public static orderValidation(item) {
-		const services = joi.object({
+	public static orderValidationNotAuth(item) {
+		const carts = joi.object({
 			product_id: joi.number()
 				.integer()
-				.required()
+				.required(),
 		});
 
-		const schema = joi.array().items(services).min(1)
+		const schema = joi.object({
+			items: joi.array().items(carts).min(1),
+			phone: joi.string().min(6).max(16).required(),
+			delivery_id: joi.number().integer().required(),
+			payment_id: joi.number().integer().required(),
+		});
+
 		return schema.validate(item);
 	}
 }

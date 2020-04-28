@@ -18,7 +18,7 @@ export default class RootRouter {
 			this.authMiddleware.isAuth,
 			this.cartController.addOrUpdateAuth());*/
         this.router.post('/addNotAuth',
-            this.orderMiddleware.vlidateOrder(),
+            this.orderMiddleware.vlidateOrderNotAuth(),
             this.orderMiddleware.checkItemsInCart(),
             this.orderController.addNotAuth())
         return this.router;

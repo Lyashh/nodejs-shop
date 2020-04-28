@@ -63,4 +63,14 @@ export default class CartController {
 				.catch((err) => res.status(500).json({ err }));
 		}
 	}
+
+	public addOrderNotAuth() {
+		return (req: CartRequest, res: Response) => {
+			return this.cartService.cartByUserId(parseInt(req.params.id))
+				.then(data => {
+					res.json(data)
+				})
+				.catch((err) => res.status(500).json({ err }));
+		}
+	}
 }
