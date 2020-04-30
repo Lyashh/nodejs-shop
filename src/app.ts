@@ -10,6 +10,11 @@ import Router from './routes/index.router';
 import auth from './services/auth/passport';
 import AuthMiddleware from './middleware/auth.middleware'
 
+
+import multer from 'multer'
+const upload = multer()
+
+
 doenv.config();
 const logger = log4js.getLogger();
 const knex = DB.getInstance.getConnection;
@@ -44,16 +49,20 @@ class App {
 			resave: false,
 			saveUninitialized: true,
 		}));
-		this.expressApp.use(bodyParser.urlencoded({ extended: false }));
-		this.expressApp.use(bodyParser.json());
+		
+		
+
 		this.expressApp.use(cors());
 		this.expressApp.use(express.static(__dirname + '/static'));
+
+		this.expressApp.use(bodyParser.json());
+		this.expressApp.use(bodyParser.urlencoded({ extended: true }));
 
 		this.expressApp.use(Passport._passport.initialize());
 		this.expressApp.use(Passport._passport.session());
 
 		this.expressApp.set('port', process.env.PORT || 3000)
-		this.expressApp.use(`/api/${process.env.API_VERSION}/`, this.authMiddleware.setSessionItems(), this.router.routes);
+		this.expressApp.use(`/api/${process.env.API_VERSION}/`, upload.none(),  this.authMiddleware.setSessionItems(), this.router.routes);
 		this.expressApp.use((req, res, next) => {
 			res.status(404);
 			return res.json({ error: `Not found${req.originalUrl}` });
