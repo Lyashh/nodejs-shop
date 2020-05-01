@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from "express";
-import CartService from "../services/db/cart.service";
 import log4js from "log4js";
+
+import CartService from "../services/db/cart.service";
 
 const logger = log4js.getLogger();
 
@@ -27,20 +28,22 @@ export default class AuthMiddleware {
     }
   }
 
-  public notAuth(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): void | Response {
-    if (!req.isAuthenticated()) {
-      return next();
-    } else {
-      return res.status(401).json({
-        message: "Forbidden",
-        detail:
-          "You cant access to this request because you Authorized now. please try logout",
-      });
-    }
+  public notAuth() {
+    return (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): void | Response => {
+      if (!req.isAuthenticated()) {
+        return next();
+      } else {
+        return res.status(401).json({
+          message: "Forbidden",
+          detail:
+            "You cant access to this request because you Authorized now. please try logout",
+        });
+      }
+    };
   }
 
   public setSessionItems() {

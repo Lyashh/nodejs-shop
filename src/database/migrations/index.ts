@@ -129,7 +129,7 @@ export async function up(knex: Knex): Promise<any> {
 
     .createTable("order", (table) => {
       table.increments();
-      table.string("phone");
+      table.string("email");
       table
         .bigInteger("delivery_id")
         .unsigned()
@@ -154,7 +154,7 @@ export async function up(knex: Knex): Promise<any> {
         .inTable("address")
         .onDelete("CASCADE")
         .index();
-      //can be nullable
+      // can be nullable
       table
         .bigInteger("user_id")
         .unsigned()
@@ -171,6 +171,7 @@ export async function up(knex: Knex): Promise<any> {
 
     .createTable("productsToOrders", (table) => {
       table.increments("id").primary();
+      table.integer("quantity").notNullable();
       table
         .bigInteger("product_id")
         .unsigned()
@@ -192,9 +193,12 @@ export async function up(knex: Knex): Promise<any> {
 
 export async function down(knex: Knex): Promise<any> {
   return knex.schema
+    .dropTable("productsToOrders")
+
     .dropTable("order")
     .dropTable("cart")
     .dropTable("address")
+
     .dropTable("users")
     .dropTable("products")
     .dropTable("registration")
@@ -204,6 +208,5 @@ export async function down(knex: Knex): Promise<any> {
     .dropTable("payment")
     .dropTable("status")
     .dropTable("productsToPots")
-    .dropTable("productsToOrders")
     .dropTable("pots");
 }

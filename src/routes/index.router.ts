@@ -6,6 +6,12 @@ import ProductRouter from './product.router';
 import CartRouter from './cart.router';
 import OrderRouter from './order.router'
 
+/**
+ *
+ *
+ * @export
+ * @class Router
+ */
 export default class Router {
 	private router: ExpressRouter
 	private userRouter: UserRouter
@@ -25,7 +31,14 @@ export default class Router {
 		this.cartRouter = new CartRouter();
 	}
 
-	public get routes() {
+	/**
+	 *
+	 *
+	 * @readonly
+	 * @type {ExpressRouter}
+	 * @memberof Router
+	 */
+	public get routes(): ExpressRouter {
 		this.router.use('/', this.rootRouter.routes);
 		this.router.use('/users', this.userRouter.routes);
 		this.router.use('/auth', this.authRouter.routes);
